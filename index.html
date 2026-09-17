@@ -1,38 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Allows the webpage to correctly display letters, numbers and special characters -->
+    <!-- Allows the browser to correctly display letters, numbers and special characters -->
   <meta charset="UTF-8">
+
+  <!--Makes the website responsive to different screen sizes and devices. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <!--name that appears on the browser tab. -->
   <title>The Lunchbox Fund | Home</title>
+
+  <!-- Connects the HTML file to an external CSS file for styling. -->
+  <link rel="stylesheet" href="./css_assets/style.css">
+
 </head>
+
 <body>
-    <header>
-        <!--The main heading of the website -->
-        <h1>The Lunchbox Fund</h1>
-        <!-- The websites headline -->
-        <p>Transforming a child's education, one meal at a time.
-        </p>
-        <!-- Block of pre formatted text is represented-->
-        <pre>
-        <div>
-                 <img src="C:\Users\mmath\OneDrive\Documents\WEDE5020 Project\images\hero image 2.png" alt="The Lunchbox Fund Logo" class="main-image " width="700" height="300" justify-content="right"    >     >
-        </div>
-        </pre>  
-       <!-- represents a paragraph-->
-         <p>
-                <!-- To introduce The Lunchbox Fund to visitors. -->
+    <!------------------------------------------------------------
+    HEADER
+    ------------------------------------------------------------>
 
-                    The Lunchbox Fund is a nonprofit organisation that provides
-                    nutritious meals to vulnerable schoolchildren, helping them
-                    attend school, concentrate on their education and improve
-                    their future opportunities.
+    <header class="site-header">
 
-                </p>
-              <!-- Creates a navigation menu -->  
-        <nav>
+        <div class="header-top">
+              <img src="./images/newLogogreenicon.png" alt="The Lunchbox Fund logo" class="logo-image">
+              <div class="header-copy">
+                  <h1>The Lunchbox Fund</h1>
+                  <p>Transforming a child's education, one meal at a time</p>
+              </div>
+        </div> 
+
+        
+
+        <!--------------------------------------
+        Navigation Bar
+        ---------------------------------------->
+        <nav class="navbar" aria-label="Main navigation">
             <ul>
-                <!-- Creates a list of links to different pages on the website. -->
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="programs.html">Programs</a></li>
@@ -40,26 +44,107 @@
                 <li><a href="contact.html">Contact Us</a></li>
                 <li><a href="enquiry.html">Enquiries</a></li>
             </ul>
-            <!-- Closes navigation menu -->
         </nav>
     </header>
+
+    <!---------------------------------------------
+    MAIN CONTENT
+    ------------------------------------------------------------>
     <main>
+        <!------------------------
+        Hero Section
+        ------------------------>
         <section class="hero">
+            <div class="hero-content">
             <h2>Providing Meals to Children in Need</h2>
             <p>Join us in our mission to ensure that no child goes hungry.</p>
-            <a href="donate.html" class="btn">Donate Now</a>
+           <!---- <a href="donate.html" class="btn">Donate Now</a> -->
+
+       <!-- represents a paragraph-->
+         <p>
+                <!-- To introduce The Lunchbox Fund to visitors. -->
+
+                    The Lunchbox Fund provides nutritious meals to 
+                    vulnerable schoolchildren and supports their 
+                    education and improve their future opportunities.
+
+                </p>
+            <div class="more-info">
+                <!--Donate Button-->
+                <a href="donate.html" class="btn">Donate Now</a>
+
+                <!-- About button -->
+                 <a href="about.html" class="btn">Learn More</a>
+                 </div>
+                 </div> 
+            </section>       
+    
+        <!-----------------------------
+        Introduction Section
+        ----------------------------->
+        <section class="section">
+            <div class="container">
+                <h2>Making a Difference</h2>
+
+                <p class="test1">
+                    Nutritious meals are essential for children's growth, development, and ability to learn.
+                    The Lunchbox Fund is committed to ensuring that every child has access to the food they 
+                    need to thrive academically and personally. By supporting our programs, you can help us 
+                    make a lasting impact on the lives of children in need.
+                </p>
+            </div>
+
+            <!-- Three cards-->
+            <div class="card-grid">
+                <!-- Card 1 -->
+                <article class="card">
+                    <h3>Nutritious Meals</h3>
+                    <p>Providing healthy, balanced meals to children in need.</p>
+
+                    <a href="programs.html" class="btn btn-secondary">Our Programs</a>
+
+                </article>
+
+                <!-- Card 2 -->
+                <article class="card">
+                    <h3>Educational Support</h3>
+                    <p>Food support can help children focus on their 
+                       studies and reach their full potential.</p>
+
+                       <a href="about.html" class="btn btn-secondary">About Us</a>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="card">
+                    <h3>Get Involved</h3>
+                    <p>People can support the cause by volunteering, 
+                       donating, or spreading awareness.</p>
+
+                       <a href="donate.html" class="btn btn-secondary">Get Involved</a>
+                </article>
+            </div>
         </section>
 
-       
-     
-        <section class="donate">
-            <h2>Support Our Cause</h2>
-            <p>Your contributions help us provide meals and support to children in need. Every donation makes a difference.</p>
-            <a href="donate.html" class="btn">Donate Today</a>
+        <!---------------------------------
+        Donate Section
+        --------------------------------->
+        <section class="cta">
+            <div class="container">
+                <h2>Help Us Make Every Meal Count</h2>
+                <p>Your contributions help us provide meals and
+                   support to children in need. Every donation makes a difference.</p>
+
+                <a href="donate.html" class="btn">Support Our Cause</a>
+
+            </div>
         </section>
-        <footer>
-            <p>&copy; 2024 The Lunchbox Fund. All rights reserved.</p>
+        </main> 
+
+        <!-- Footer -->
+        <footer class="site-footer">
+              <p>&copy; 2026 The Lunchbox Fund.</p>
         </footer>
     </main>
 </body>
 </html>
+

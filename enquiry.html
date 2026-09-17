@@ -1,42 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enquiry - The Lunchbox Fund</title>
+    <link rel="stylesheet" href="./css_assets/style.css">
 </head>
 <body>
-     <header>
-    <!-- The top section of the website. -->
-        <h1>The Lunchbox Fund</h1>
-        <p>Transforming a child's education, one meal at a time.</p>
-        </header>
-        
-        <main>
-            <section>
+    <header class="site-header">
+        <div class="header-top">
+              <img src="./images/newLogogreenicon.png" alt="The Lunchbox Fund logo" class="logo-image">
+              <div class="header-copy">
+                  <h1>The Lunchbox Fund</h1>
+                  <p>Transforming a child's education, one meal at a time</p>
+              </div>
+        </div>
+
+        <nav class="navbar" aria-label="Main navigation">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="donate.html">Donate</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="enquiry.html" class="active">Enquiries</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="content-section">
+        <div class="container">
+            <div class="section-heading">
                 <h2>Get Involved</h2>
-                <pre>
-                            <img src="C:\Users\mmath\OneDrive\Documents\WEDE5020 Project\images\image.jpeg"alt="The Lunchbox Fund Logo" 
-                            class="main-image " width="500" height="300" justify-content="right"    >
-                </pre>
-                <pre>
-                    We welcome volunteers and partners who share our mission to provide nutritious meals to vulnerable schoolchildren.
+                <p>We welcome volunteers and partners who share our mission to provide nutritious meals to vulnerable schoolchildren.</p>
+            </div>
 
-                               If you would like to support The Lunchbox Fund, please reach out to us
-                                        through the contact information provided below.
+            <div class="two-column">
+                <div>
+                    <p>
+                        If you would like to support The Lunchbox Fund, please reach out to us through the contact details provided below.
+                    </p>
+                    <p>
+                        We look forward to collaborating with you to make a positive impact on children's lives.
+                    </p>
 
-                    We look forward to collaborating with you to make a positive impact on children's lives.
+                    <div class="contact-grid">
+                        <div class="contact-item">
+                            <h3>Email</h3>
+                            <p><a href="mailto:info@thelunchboxfund.co.za">info@thelunchboxfund.co.za</a></p>
+                        </div>
 
-                    <div class="contact-details">
-             
-                    <h3>Email</h3>
-                <h3>mailto:info@thelunchboxfund.org</h3>
-                    
-                
-                </pre>
-            </section>
-        </main>
-    
-        <div>
-    <button class="btn" onclick="window.location.href='index.html'">Back</button>
- </div>
+                        <div class="contact-item">
+                            <h3>Volunteer</h3>
+                            <p>We are always looking for partners who are passionate about supporting child nutrition and education.</p>
+                        </div>
+                    </div>
 
- </html>
+                    <div class="more-info">
+                        <a href="index.html" class="btn">Back to Home</a>
+                    </div>
+                </div>
+
+                <div>
+                    <img src="./images/image.jpeg" alt="The Lunchbox Fund community support" class="main-image">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+         <p>&copy; 2026 The Lunchbox Fund.</p>
+    </footer>
+</body>
+</html>

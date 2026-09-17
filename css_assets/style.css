@@ -1,0 +1,531 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*to make scrolling smooth*/
+html {
+    scroll-behavior: smooth;
+}
+
+/*Base website styles*/
+body {
+    font-family: Arial, Arial, Helvetica, sans-serif;
+    line-height: 16px;
+    color: #243126;
+    background-color: #f4f8f3;
+}
+
+/*Make images responsive*/
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/*link styles*/
+a {
+    color: #176b3a;
+}
+
+/*change link color on hover*/
+a:hover {
+    color: #0d4d29;
+}
+
+/*Main container keeps content from becoming too wide on large screens*/
+.main-container {
+    width: min(1100px, 92%);
+    margin: 0 auto;
+}
+
+.container {
+    width: min(1100px, 92%);
+    margin: 0 auto;
+}
+
+/*used when text needs to be centered*/
+.text-center {
+    text-align: center;
+}
+
+.logo-image {
+    display: block;
+    width: 220px;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+    margin: 0;
+    background-color: #145a32;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    outline: none;
+}
+
+/*==============================
+            HEADER
+    =============================*/
+    .site-header {
+        background-color: #145a32;
+        color: #f4f8f3;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /*Website title area*/
+    .header-top {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+        background-color: #145a32;
+        overflow: hidden;
+        min-height: 90px;
+    }
+
+    .header-top h1 {
+        font-size: clamp(2rem, 5vw, 3.2rem);
+        margin-bottom: 5px;
+    }
+
+    .header-copy {
+        flex: 0 1 auto;
+        text-align: center;
+        padding: 15px 20px 15px 0;
+        margin-left: 8px;
+    }
+
+    .header-copy h1 {
+        font-size: clamp(3.5rem, 3vw, 1.4rem);
+        margin-bottom: 30px;
+    }
+
+    .header-copy p {
+        font-size: 1rem;
+        opacity: 0.95;
+    }
+
+    .header-top p {
+        font-size: 1.05rem;
+        opacity: 0.95;
+    }
+
+    /*---------------------------------------
+    Navigation bar styles
+    ---------------------------------------*/
+    .navbar {
+        background-color: #0d4627;
+        
+    }
+
+    /*place navigation items next to each other*/
+    .navbar ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    /*Allows each list item to contain the link properly*/
+    .navbar li {
+        display: flex;
+    }
+
+/*Navigation links*/
+    .navbar a {
+        display: block;
+        padding: 14px 18px;
+        color: #f4f8f3;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    /*Change link color on hover*/
+    .navbar a:hover, .navbar a:focus {
+        background-color: #23844b;
+    }
+
+    /* show the page the user is currently on */
+    .navbar a.active {
+        background-color: #35a65f;
+    }
+
+    /*-------------------------
+    Hero section styles
+    -------------------------*/
+    .hero {
+        background: linear-gradient(rgba(13, 70, 39, 0.78), rgba(20, 90, 50, 0.78)),
+                    url('../images/hero%20image%202.png') center/cover no-repeat;
+        color: #f4f8f3;
+        text-align: center;
+        min-height: 430px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 70px 20px;
+    }
+
+    .hero-content {
+        max-width: 760px;
+    }
+
+    .hero h2 {
+        font-size: clamp(2rem, 5vw, 3.4rem);
+        margin-bottom: 18px;
+        line-height: 1.15;
+    }
+
+    .hero p {
+        font-size: 1.15rem;
+        margin-bottom: 28px;
+    }
+
+    .hero-tagline {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 18px;
+        color: #f4f8f3;
+    }
+
+    /*-------------------------
+    button styles
+    -------------------------*/
+    .btn {
+        display: inline-block;
+        background-color: #23844b;
+        color: #f4f8f3;
+        text-decoration: none;
+        padding: 12px 22px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+     
+/*Change button color on hover*/
+    .btn:hover, .btn:focus {
+        background-color: #176b3a;
+        color: #f4f8f3;
+        transform: translateY(-2px);
+
+    }
+
+    /*light button style*/
+    .btn-light {
+        background-color: #f4f8f3;
+        color: #145a32;
+    }
+
+    /*Secondary button style*/
+    .btn-secondary {
+        background-color: #dcefe1;
+        color: #145a32;
+    }
+
+    .btn-secondary:hover, .btn-secondary:focus {
+        background-color: #c5e4cd;
+        color: #0d4627;
+    }
+
+    /*-------------------------------
+    General content section styles
+    -------------------------------*/
+    main {
+        min-height: 60vh;
+    }
+
+    .section {
+        padding: 65px 0px;
+    }
+
+    .section-heading {
+        text-align: center;
+        max-width: 750px;
+        margin: 0 auto 35px;
+    }
+
+    .section-heading h2 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        color: #145a32;
+    }
+
+    .section-heading p {
+        color: #526257;
+    }
+
+    /*general content section styles*/
+
+    .content-section {
+        padding: 60px 0;
+    }
+
+    /*headings inside content sections*/
+    .content-section h1, .content-section h2, .content-section h3 {
+        color: #145a32;
+        margin-bottom: 14px;
+    }
+
+    /*paragraph spacing inside content sections*/
+    .content-section p {
+        margin-bottom: 18px;
+    }
+
+    /*----------------------------------
+    Two Column Layout Styles
+    used on larger desktop screens for content sections
+    ----------------------------------*/
+    .two-column {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 35px;
+        align-items: center;
+    }
+
+    /*----------------------------------
+    Cards
+    ----------------------------------*/
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+    }
+
+    .card {
+        background-color: #f4f8f3;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(20, 90, 50, 0.08);
+        border: 1px solid #d7e6da;
+        padding: 24px;
+    }
+
+    .test1 {
+        margin-bottom: 30px;
+        margin-top: 25px;
+    }
+
+    .more-info {
+        margin-top: 2px;
+        margin-bottom: 10px;
+    }
+
+    .card h3 {
+        color: #145a32;
+        margin-bottom: 10px;
+    }
+
+    .card p {
+        margin-bottom: 18px;
+    }
+
+    /*----------------------------------
+    Images
+    ----------------------------------*/
+    .main-image {
+        width: 100%;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    /*Logo image used in the header*/
+    .logo-image {
+        max-width: 220px;
+        object-fit: contain;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+
+    }
+
+    /* Smaller logo image */
+    .logo-image {
+        max-width: 220px;
+        margin: 0;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+    } 
+
+    /*----------------------------------
+    Lists
+    ----------------------------------*/
+    .content-section ul {
+        padding-left: 24px;
+        margin-bottom: 20px;
+    }
+
+    .content-section li, .card li {
+        margin-bottom: 8px;
+    }
+
+    /*----------------------------------
+    Contact Information Section
+    ----------------------------------*/
+    .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+    }
+
+    .contact-item {
+        background-color: #f4f8f3;
+        border-radius: 10px;
+        box-shadow: 0 5px 18px rgba(20, 90, 50, 0.08);
+        padding: 25px;
+        border-radius: 10px;
+    }
+
+    .contact-item h3 {
+        color: #145a32;
+        margin-bottom: 8px;
+    }
+
+    .contact-item a {
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    /*----------------------------------
+    Forms
+    ----------------------------------*/
+    .form-card {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #f4f8f3;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(20, 90, 50, 0.09);
+        padding: 32px;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: bold;
+        color: #145a32;
+    }
+
+    /* Text boxes, email boxes and dropdown*/
+    .form-group input, .form-group select, .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #b8cbbd;
+        border-radius: 7px;
+        font: inherit;
+        background-color: #fbfdfb;
+    }
+
+    /* Message box height. */
+    .form-group textarea {
+        min-height: 150px;
+        resize: vertical;
+    }
+
+    /* Focus effect when someone clicks on a text box, email box or dropdown*/
+    .form-group input:focus, .form-group select:focus, .form-group textarea {
+        outline: 3px solid rgba(35, 132, 75, 0.2)   ;
+        border-color: #23844b;
+    }
+
+    /*--------------------------------
+    Call to Action Section
+    --------------------------------*/
+
+    .cta {
+        background-color: #dcefe1;
+        color: #f4f8f3;
+        text-align: center;
+        padding: 50px 20px;
+    }
+
+    .cta h2 {
+        margin-bottom: 10px;
+        color: #145a32;
+    }
+
+    .cta p {
+        margin-bottom: 22px;
+    }
+
+    /*--------------------------------
+    Footer Section
+    --------------------------------*/
+    .site-footer {
+        background-color: #0d4627;
+        color: #f4f8f3;
+        text-align: center;
+        padding: 28px 20px;
+        margin-top: 0;
+    }
+
+    .site-footer a {
+        color: #f4f8f3;
+    }
+    
+    /*--------------------------------
+    Responsive Design
+    Tablet and mobile screen styles
+    --------------------------------*/
+    @media (max-width: 800px) {
+        /*Navigation becomes vertical on smaller screens*/
+        .navbar ul {
+            flex-direction: column;
+        }
+
+        .navbar a {
+            width: 100%;
+            text-align: center;
+        }
+        /* Desktop two-column layout becomes single column on smaller screens */
+        .two-column, .card-grid, .contact-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .hero {
+            min-height: 360px;
+        }
+
+        .section, .content-section {
+            padding: 45px 0;
+        }   
+    }
+
+    /*--------------------------------
+    Small mobile screen styles
+    --------------------------------*/
+    @media (max-width: 480px) {
+        body {
+            font-size: 15px;
+        }
+
+        .header-top {
+            padding: 22px 15px 16px;
+        }
+
+        .hero {
+            padding: 55px 15px;
+        }
+
+        .form-card {
+            padding: 22px;
+        }
+    }
+    .test1 {
+        margin-bottom: 30px;
+        margin-top: 25px;
+        
+    }
+    .more-info {
+        margin-top: 2px;
+        margin-bottom: 10px;
+    }
+    
