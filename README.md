@@ -66,7 +66,25 @@ Budget
 - create folder named: Private (Proposals)
 - move proposals, sitemap, content research and sourcing files to Private (Proposals) folder
 - complete navigation menu
-- add content in donate.html 
+- add content in donate.html
+
+  ## Screenshot evidence
+  ### Desktop
+  <img width="1887" height="942" alt="image" src="https://github.com/user-attachments/assets/f09fe075-a2ff-4c2a-a1da-daf1fd1f0d88" />
+  <img width="1902" height="942" alt="image" src="https://github.com/user-attachments/assets/62426f28-52f9-46cf-b0a2-f2a785090161" />
+  <img width="1891" height="686" alt="image" src="https://github.com/user-attachments/assets/8101575c-c726-4a9d-8d70-3b6331421404" />
+
+  ### Mobile
+  <img width="739" height="1600" alt="mobile 1" src="https://github.com/user-attachments/assets/9bc1d0da-a917-41b9-85e7-8d07c410667b" />
+  <img width="739" height="1600" alt="mobile 4" src="https://github.com/user-attachments/assets/4b36ae10-3985-40f1-8fac-b4515db7af6a" />
+  <img width="739" height="1600" alt="mobile 3" src="https://github.com/user-attachments/assets/86aecb61-b77b-42a9-8add-8a4e0f46a6f1" />
+
+  
+
+
+
+
+
 
 ### References (updated)
   Organization overview & Website goals and objectives
