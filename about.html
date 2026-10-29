@@ -1,174 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>About Us | The Lunchbox Fund</title>
-
     <link rel="stylesheet" href="./css_assets/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+    <script src="./myscript.js" defer></script>
 </head>
 
-<body>
-
-    <!---------------------------------
-    Header
-    ------------------------------------>
+<body class="about-page">
     <header class="site-header">
-
-        <div class="header-top"> 
+        <div class="header-top">
             <img src="./images/newLogogreenicon.png" alt="The Lunchbox Fund logo" class="logo-image">
             <div class="header-copy">
                 <h1>The Lunchbox Fund</h1>
                 <p>Transforming a child's education, one meal at a time</p>
             </div>
-            
         </div>
-        
-            <!-- Navigation -->
-             <nav class="navbar" aria-label="Main Navigation">
-                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html" class="active">About</a></li>
-                    <li><a href="programs.html">Programs</a></li>
-                    <li><a href="donate.html">Donate</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
-                    <li><a href="enquiry.html">Enquiries</a></li>
-                </ul>
 
-             </nav>
-             </header>  
+            <!-- Navigation -->
+        <nav class="navbar" aria-label="Main navigation">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html" class="active" aria-current="page">About</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="donate.html">Donate</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="enquiry.html">Enquiries</a></li>
+            </ul>
+        </nav>
+    </header>
 
              <!--------------------------------
                 Main Content
              ----------------------------------->
-             <main>
-                <section class="content-section">
-                <div class="container">
+    <main>
+        <section class="content-section">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <p class="eyebrow">Our story, our purpose</p>
+                    <h2>About The Lunchbox Fund</h2>
+                    <p>Learn about the organization, its history, mission and the communities it serves.</p>
+                </div>
 
-                    <!-- Page introduction -->
-                     <div class="section-heading"> 
+                <section class="about-story two-column reveal" aria-labelledby="story-heading">
+                    <div>
+                        <h2 id="story-heading">A meal can make room for learning</h2>
+                        <p>The Lunchbox Fund works to reduce the effects of hunger and food insecurity among vulnerable schoolchildren.</p>
+                        <p>By supporting access to nutritious meals, the organization aims to help children attend school, concentrate on their education and improve their future opportunities.</p>
+                        <a href="programs.html" class="btn">Explore our programs</a>
+                    </div>
+                    <img src="./images/khalil-radi-BlzrvWb1_vQ-unsplash%20(1).jpg" alt="A community volunteer serves a meal to children" class="main-image">
+                </section>
 
-                     <h2>About The Lunchbox Fund</h2>
+                <section class="about-section reveal" aria-labelledby="history-heading">
+                    <div class="section-heading">
+                        <p class="eyebrow">Growing with communities</p>
+                        <h2 id="history-heading">Our History</h2>
+                        <p>Discover key moments in The Lunchbox Fund's journey.</p>
+                    </div>
+                    <div class="history-accordion">
+                        <details class="history-item" open>
+                            <summary><span>2005</span> A small beginning in Soweto</summary>
+                            <div class="history-copy">
+                                <p>The Lunchbox Fund was founded in 2005 by South African model Topaz Page-Green. It began by feeding 100 children at a high school in Soweto.</p>
+                            </div>
+                        </details>
+                        <details class="history-item">
+                            <summary><span>Today</span> Supporting children across the region</summary>
+                            <div class="history-copy">
+                                <p>The organization has grown its work to support vulnerable schoolchildren in South Africa, Mozambique and Lesotho.</p>
+                            </div>
+                        </details>
+                    </div>
+                </section>
 
-                     <p>
-                        Learn more about the organization, its history, mission and people.
-                     </p>
-                     </div>
+                <section class="about-section reveal" aria-labelledby="purpose-heading">
+                    <div class="section-heading">
+                        <p class="eyebrow">What guides our work</p>
+                        <h2 id="purpose-heading">Vision, Mission &amp; Values</h2>
+                        <p>Choose a topic to learn more about the purpose behind our work.</p>
+                    </div>
 
-                     <!--------------------------------------
-                     About 
-                     ----------------------------------------->
-
-                     <div class="two-clumn">
-                        <div>
-                            <h2> Our Story </h2>
-                            
-                            <p>
-                                The Lunchbox Fund works to reduce the effects of hunger and
-                                food insecurity among vulnerable schoolchildren.
-                                
-                            </p>
-                            
-                            <p>
-                                By supporting access to  nutritious meals, the organization
-                                aims to help children attend school, concentrate on their 
-                                education and improve their future opportunities.
-
-                            </p>
+                    <div class="about-tabs" data-tabs hidden>
+                        <div class="tab-list" role="tablist" aria-label="About our purpose">
+                            <button class="about-tab" id="tab-vision" type="button" role="tab" aria-selected="true" aria-controls="panel-vision" tabindex="0">Our vision</button>
+                            <button class="about-tab" id="tab-mission" type="button" role="tab" aria-selected="false" aria-controls="panel-mission" tabindex="-1">Our mission</button>
+                            <button class="about-tab" id="tab-values" type="button" role="tab" aria-selected="false" aria-controls="panel-values" tabindex="-1">Our values</button>
                         </div>
+                        <div class="tab-panel" id="panel-vision" role="tabpanel" aria-labelledby="tab-vision" tabindex="0">
+                            <h3>A future where every child can learn</h3>
+                            <p>Our vision is to foster education through nutrition by providing healthy meals to orphaned, vulnerable and food-insecure schoolchildren in townships and rural areas.</p>
+                        </div>
+                        <div class="tab-panel" id="panel-mission" role="tabpanel" aria-labelledby="tab-mission" tabindex="0">
+                            <h3>Upholding the right to education</h3>
+                            <p>Our mission is to help ensure that hunger and food insecurity do not prevent children from learning.</p>
+                        </div>
+                        <div class="tab-panel" id="panel-values" role="tabpanel" aria-labelledby="tab-values" tabindex="0">
+                            <h3>Working alongside communities</h3>
+                            <p>Our work is grounded in care, dignity and collaboration with the communities, schools and local partners who support children every day.</p>
+                        </div>
+                    </div>
+                    <noscript>
+                        <div class="values-fallback">
+                            <h3>Our vision</h3>
+                            <p>To foster education through nutrition by providing healthy meals to orphaned, vulnerable and food-insecure schoolchildren in townships and rural areas.</p>
+                            <h3>Our mission</h3>
+                            <p>To help ensure that hunger and food insecurity do not prevent children from learning.</p>
+                            <h3>Our values</h3>
+                            <p>Care, dignity and collaboration with communities, schools and local partners.</p>
+                        </div>
+                    </noscript>
+                    <div class="team-note">
+                        <h3>Our Team</h3>
+                        <p>The Lunchbox Fund is supported by board members, advisors, employees, fieldworkers and Food Mamas who contribute to its work in different countries.</p>
+                        <p><strong>Founder:</strong> Topaz Page-Green</p>
+                        <p><strong>In memory of our patron:</strong> Archbishop Emeritus Desmond Tutu</p>
+                    </div>
+                </section>
 
-                        <!-- Image -->
-                         <div>
-                            <img src="./images/khalil-radi-BlzrvWb1_vQ-unsplash%20(1).jpg" alt="Children receiving meals" class="main-image">
-                         </div>
+                <section class="about-section reveal" aria-labelledby="map-heading">
+                    <div class="section-heading">
+                        <p class="eyebrow">Southern Africa</p>
+                        <h2 id="map-heading">Where we work</h2>
+                        <p>The organization supports schoolchildren in South Africa, Mozambique and Lesotho.</p>
+                    </div>
+                    <div class="map-note">Map markers are illustrative regional reference points, not verified office or project locations. The interactive map requires an internet connection.</div>
+                    <div id="impact-map" class="impact-map" role="region" aria-label="Map showing illustrative reference points in South Africa, Mozambique, and Lesotho"></div>
+                    <p id="map-status" class="map-status" role="status">Loading the interactive map. The countries served are South Africa, Mozambique and Lesotho.</p>
+                    <ul class="country-list" aria-label="Countries served">
+                        <li>South Africa</li>
+                        <li>Mozambique</li>
+                        <li>Lesotho</li>
+                    </ul>
+                </section>
 
-                     </div>
+                <section class="about-section reveal" aria-labelledby="gallery-heading">
+                    <div class="section-heading">
+                        <p class="eyebrow">A closer look</p>
+                        <h2 id="gallery-heading">In our community</h2>
+                        <p>Select a photograph to view it larger.</p>
+                    </div>
+                    <div class="photo-gallery" data-gallery>
+                        <button class="gallery-item" type="button" data-gallery-image="./images/khalil-radi-BlzrvWb1_vQ-unsplash%20(1).jpg" data-gallery-caption="A community volunteer serves a meal to children">
+                            <img src="./images/khalil-radi-BlzrvWb1_vQ-unsplash%20(1).jpg" alt="A community volunteer serves a meal to children" loading="lazy">
+                            <span>Meals shared in community</span>
+                        </button>
+                        <button class="gallery-item" type="button" data-gallery-image="./images/bennett-tobias-tqwOJAvUIh4-unsplash%20(1).jpg" data-gallery-caption="Children smiling together">
+                            <img src="./images/bennett-tobias-tqwOJAvUIh4-unsplash%20(1).jpg" alt="Children smiling together" loading="lazy">
+                            <span>Every child deserves the chance to thrive</span>
+                        </button>
+                        <button class="gallery-item" type="button" data-gallery-image="./images/rewired-digital-4UFIg9htJgE-unsplash.jpg" data-gallery-caption="Children play together in a welcoming classroom">
+                            <img src="./images/rewired-digital-4UFIg9htJgE-unsplash.jpg" alt="Children play together in a welcoming classroom" loading="lazy">
+                            <span>Learning and play go hand in hand</span>
+                        </button>
+                    </div>
+                </section>
 
-                     <!-- --------------------------
-                      History
-                      ----------------------------->
+                <dialog class="lightbox" aria-label="Photo viewer" aria-describedby="lightbox-caption">
+                    <div class="lightbox-content">
+                        <button class="lightbox-close" type="button" aria-label="Close photo viewer" autofocus>&times;</button>
+                        <button class="lightbox-nav lightbox-previous" type="button" aria-label="Previous photo">&#8249;</button>
+                        <figure>
+                            <img class="lightbox-image" src="" alt="">
+                            <figcaption id="lightbox-caption" class="lightbox-caption"></figcaption>
+                        </figure>
+                        <button class="lightbox-nav lightbox-next" type="button" aria-label="Next photo">&#8250;</button>
+                    </div>
+                </dialog>
 
-                      <div class="conten-section history-section">
-                        <h2> Our History </h2>
+                <div class="about-home-link">
+                    <a href="index.html" class="btn">Back to Home</a>
+                </div>
+            </div>
+        </section>
+    </main>
 
-                        <p>
-                            The Lunchbox Fund was founded in 2005 by South African model
-                            Topaz Page-Green.
-                            The organization started by feeding 100 children at a high
-                            school in Soweto. Since then, the organization has grown to provide millions of
-                            daily meals to vulnerable schoolchildren across South Africa,
-                            Mozambique and Lesotho.
-            
-                        </p>
-
-                        <!--------------------------
-                         Vision and Mission 
-                         --------------------------->
-                         <h2>Vision and Mission</h2>
-
-                         <p>
-                            The vision of the Lunchbox Fund is to foster education through nutrition 
-                            by providing healthy meals daily to orphaned, vulnerable, and food-insecure 
-                            schoolchildren in townships and rural areas. 
-                         </p>
-
-                         <p>
-                            Its mission is to uphold children's right to 
-                            education by helping ensure that hunger and 
-                            food insecurity  do not prevent them from learning.
-                         </p>
-
-                         <!-------------------------
-                         Team
-                         ----------------------------->
-
-                         <h2>Our Team </h2>
-
-                         <p> 
-                            The Lunchbox fund is led by a dedicated team of 
-                            professionals who are passionate about making a 
-                            difference in the lives of children. Our team 
-                            consists of board members, advisors, employees, 
-                            fieldworkers and Food Mamas who contribute to the 
-                            organization's work in different countries.
-
-                         </p>
-
-                         <h3> In Memory of Our Patron </h3>
-                         <p> 
-                            Archbishop Emeritus Desmond Tutu
-                         </p>
-
-                         <h3> Founder</h3>
-                         <p>
-                            Topaz Page-Green
-                         </p>
-
-                      </div>
-
-                      <!-- Back Button -->
-
-                      <a href="index.html" class="btn"> Back to Home </a>
-
-                     </div>
-
-                 </section>
-
-             </main>
-
-             <footer class="site-footer">
-                 <p>&copy; 2026 The Lunchbox Fund.</p>
-             </footer>
-
- </body>
+    <footer class="site-footer">
+        <p>&copy; 2026 The Lunchbox Fund.</p>
+    </footer>
+</body>
 </html>
-
-
-   
-           
- 
-    
-      
