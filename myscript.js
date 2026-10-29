@@ -181,3 +181,88 @@ if (aboutPage) {
         });
     }
 }
+
+const programsGrid = document.querySelector("[data-program-grid]");
+const programControls = document.querySelector("[data-program-controls]");
+const programResults = document.querySelector("[data-program-results]");
+
+if (programsGrid && programControls && programResults) {
+    // Keep the program data separate from the page markup so results can be filtered and rebuilt.
+    const programs = [
+        {
+            title: "School Feeding",
+            description: "Providing nutritious meals each school day so children can learn, focus, and thrive.",
+            category: "nutrition"
+        },
+        {
+            title: "Community Outreach",
+            description: "Supporting families and schools with food security programs and local community partnerships.",
+            category: "community"
+        },
+        {
+            title: "Advocacy & Awareness",
+            description: "Helping communities understand the link between nutrition, health, and education.",
+            category: "advocacy"
+        }
+    ];
+
+    const searchInput = programControls.querySelector("#program-search");
+    const categorySelect = programControls.querySelector("#program-category");
+    const sortSelect = programControls.querySelector("#program-sort");
+
+    const renderPrograms = () => {
+        const searchTerm = searchInput.value.trim().toLocaleLowerCase();
+        const selectedCategory = categorySelect.value;
+        const sortOrder = sortSelect.value;
+
+        const matchingPrograms = programs
+            .filter((program) => {
+                const matchesSearch = `${program.title} ${program.description}`
+                    .toLocaleLowerCase()
+                    .includes(searchTerm);
+                const matchesCategory = selectedCategory === "all" || program.category === selectedCategory;
+                return matchesSearch && matchesCategory;
+            })
+            .sort((first, second) => {
+                const nameOrder = first.title.localeCompare(second.title);
+                return sortOrder === "za" ? -nameOrder : nameOrder;
+            });
+
+        // Build cards with DOM text nodes so program text is never treated as HTML.
+        const cards = matchingPrograms.map((program) => {
+            const card = document.createElement("article");
+            const title = document.createElement("h3");
+            const description = document.createElement("p");
+            const category = document.createElement("p");
+
+            card.className = "card";
+            title.textContent = program.title;
+            description.textContent = program.description;
+            category.className = "program-category";
+            category.textContent = `Focus: ${program.category}`;
+            card.append(title, description, category);
+            return card;
+        });
+
+        // Replace the previous results together so sorting and filtering stay in sync.
+        programsGrid.replaceChildren(...cards);
+
+        if (matchingPrograms.length === 0) {
+            const emptyMessage = document.createElement("p");
+            emptyMessage.className = "program-empty";
+            emptyMessage.textContent = "No programs match your search. Try another word or choose a different focus area.";
+            programsGrid.append(emptyMessage);
+        }
+
+        const countLabel = matchingPrograms.length === 1 ? "program" : "programs";
+        programResults.textContent = `Showing ${matchingPrograms.length} ${countLabel}.`;
+    };
+
+    // Keep the original cards available until the controls and renderer are ready.
+    programControls.hidden = false;
+    renderPrograms();
+    programControls.addEventListener("submit", (event) => event.preventDefault());
+    searchInput.addEventListener("input", renderPrograms);
+    categorySelect.addEventListener("change", renderPrograms);
+    sortSelect.addEventListener("change", renderPrograms);
+}

@@ -306,6 +306,67 @@ a:hover {
         padding: 24px;
     }
 
+    /* Program search, category filter, and sort controls. */
+    .program-controls {
+        display: grid;
+        grid-template-columns: minmax(220px, 2fr) minmax(160px, 1fr) minmax(160px, 1fr);
+        gap: 16px;
+        align-items: end;
+        margin: 0 0 14px;
+        padding: 20px;
+        border: 1px solid #d7e6da;
+        border-radius: 12px;
+        background-color: #fff;
+    }
+
+    .program-controls[hidden] {
+        display: none;
+    }
+
+    .program-controls label {
+        display: block;
+        margin-bottom: 6px;
+        color: #145a32;
+        font-weight: 700;
+    }
+
+    .program-controls input,
+    .program-controls select {
+        width: 100%;
+        min-height: 44px;
+        padding: 10px 12px;
+        border: 1px solid #b8cbbd;
+        border-radius: 7px;
+        background-color: #fbfdfb;
+        color: #243126;
+        font: inherit;
+    }
+
+    .program-controls input:focus,
+    .program-controls select:focus {
+        outline: 3px solid rgba(35, 132, 75, 0.2);
+        border-color: #23844b;
+    }
+
+    .program-results {
+        min-height: 1.5em;
+        margin: 0 0 14px;
+        color: #526257;
+    }
+
+    .program-grid .card {
+        animation: about-panel-enter 0.25s ease both;
+    }
+
+    .program-empty {
+        grid-column: 1 / -1;
+        padding: 24px;
+        border: 1px dashed #b8cbbd;
+        border-radius: 12px;
+        color: #526257;
+        text-align: center;
+    }
+
     .test1 {
         margin-bottom: 30px;
         margin-top: 25px;
@@ -978,6 +1039,14 @@ a:hover {
             grid-template-columns: 1fr;
         }
 
+        .program-controls {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .program-search-field {
+            grid-column: 1 / -1;
+        }
+
         .hero {
             min-height: 360px;
         }
@@ -1040,6 +1109,15 @@ a:hover {
 
         .form-card {
             padding: 22px;
+        }
+
+        .program-controls {
+            grid-template-columns: 1fr;
+            padding: 16px;
+        }
+
+        .program-search-field {
+            grid-column: auto;
         }
     }
     .test1 {

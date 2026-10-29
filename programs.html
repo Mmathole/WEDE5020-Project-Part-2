@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Programs - The Lunchbox Fund</title>
     <link rel="stylesheet" href="./css_assets/style.css">
+    <script src="./myscript.js" defer></script>
 </head>
 <body>
     <header class="site-header">
@@ -35,7 +36,32 @@
                 <p>We run various initiatives focused on reducing child hunger and supporting education.</p>
             </div>
 
-            <div class="card-grid">
+            <!-- These controls appear when JavaScript is ready; the cards below remain as a no-script fallback. -->
+            <form class="program-controls" data-program-controls hidden role="search">
+                <div class="program-search-field">
+                    <label for="program-search">Search programs</label>
+                    <input id="program-search" name="search" type="search" placeholder="Try meals, schools, or community">
+                </div>
+                <div>
+                    <label for="program-category">Filter by focus</label>
+                    <select id="program-category" name="category">
+                        <option value="all">All areas</option>
+                        <option value="nutrition">Nutrition</option>
+                        <option value="community">Community</option>
+                        <option value="advocacy">Advocacy</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="program-sort">Sort programs</label>
+                    <select id="program-sort" name="sort">
+                        <option value="az">Name: A to Z</option>
+                        <option value="za">Name: Z to A</option>
+                    </select>
+                </div>
+            </form>
+
+            <p class="program-results" data-program-results role="status" aria-live="polite"></p>
+            <div class="card-grid program-grid" data-program-grid>
                 <article class="card">
                     <h3>School Feeding</h3>
                     <p>Providing nutritious meals each school day so children can learn, focus, and thrive.</p>
@@ -75,5 +101,4 @@
     </footer>
 </body>
 </html>
-
 
