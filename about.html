@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | The Lunchbox Fund</title>
     <link rel="stylesheet" href="./css_assets/style.css">
+    <!-- Leaflet provides the interactive map; defer scripts so the page loads before they run. -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
     <script src="./myscript.js" defer></script>
 </head>
 
 <body class="about-page">
+    <!-- Shared site header and navigation. -->
     <header class="site-header">
         <div class="header-top">
             <img src="./images/newLogogreenicon.png" alt="The Lunchbox Fund logo" class="logo-image">
@@ -39,12 +41,14 @@
     <main>
         <section class="content-section">
             <div class="container">
+                <!-- Short introduction to the information on this page. -->
                 <div class="section-heading reveal">
                     <p class="eyebrow">Our story, our purpose</p>
                     <h2>About The Lunchbox Fund</h2>
                     <p>Learn about the organization, its history, mission and the communities it serves.</p>
                 </div>
 
+                <!-- Organization overview paired with a community photograph. -->
                 <section class="about-story two-column reveal" aria-labelledby="story-heading">
                     <div>
                         <h2 id="story-heading">A meal can make room for learning</h2>
@@ -55,6 +59,7 @@
                     <img src="./images/khalil-radi-BlzrvWb1_vQ-unsplash%20(1).jpg" alt="A community volunteer serves a meal to children" class="main-image">
                 </section>
 
+                <!-- Native details elements make the timeline expandable, even without JavaScript. -->
                 <section class="about-section reveal" aria-labelledby="history-heading">
                     <div class="section-heading">
                         <p class="eyebrow">Growing with communities</p>
@@ -84,6 +89,7 @@
                         <p>Choose a topic to learn more about the purpose behind our work.</p>
                     </div>
 
+                    <!-- JavaScript reveals and controls these accessible tabs when ready. -->
                     <div class="about-tabs" data-tabs hidden>
                         <div class="tab-list" role="tablist" aria-label="About our purpose">
                             <button class="about-tab" id="tab-vision" type="button" role="tab" aria-selected="true" aria-controls="panel-vision" tabindex="0">Our vision</button>
@@ -103,6 +109,7 @@
                             <p>Our work is grounded in care, dignity and collaboration with the communities, schools and local partners who support children every day.</p>
                         </div>
                     </div>
+                    <!-- Keep the vision, mission, and values available when JavaScript is disabled. -->
                     <noscript>
                         <div class="values-fallback">
                             <h3>Our vision</h3>
@@ -121,6 +128,7 @@
                     </div>
                 </section>
 
+                <!-- The map is interactive; the country list remains available as a text alternative. -->
                 <section class="about-section reveal" aria-labelledby="map-heading">
                     <div class="section-heading">
                         <p class="eyebrow">Southern Africa</p>
@@ -137,6 +145,7 @@
                     </ul>
                 </section>
 
+                <!-- Gallery buttons open the corresponding photo in the lightbox below. -->
                 <section class="about-section reveal" aria-labelledby="gallery-heading">
                     <div class="section-heading">
                         <p class="eyebrow">A closer look</p>
@@ -159,6 +168,7 @@
                     </div>
                 </section>
 
+                <!-- The dialog is populated by JavaScript and supports close and next/previous controls. -->
                 <dialog class="lightbox" aria-label="Photo viewer" aria-describedby="lightbox-caption">
                     <div class="lightbox-content">
                         <button class="lightbox-close" type="button" aria-label="Close photo viewer" autofocus>&times;</button>
@@ -178,6 +188,7 @@
         </section>
     </main>
 
+    <!-- Shared site footer. -->
     <footer class="site-footer">
         <p>&copy; 2026 The Lunchbox Fund.</p>
     </footer>

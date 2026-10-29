@@ -1,9 +1,11 @@
 const aboutPage = document.querySelector(".about-page");
 
+// Keep this page-specific behavior from affecting the site's other pages.
 if (aboutPage) {
     aboutPage.classList.add("js-enabled");
 
     const revealItems = aboutPage.querySelectorAll(".reveal");
+    // Animate sections only as they enter the viewport, and show them all if unsupported.
     if ("IntersectionObserver" in window) {
         const revealObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach((entry) => {
@@ -24,6 +26,7 @@ if (aboutPage) {
         const tabs = Array.from(tabsContainer.querySelectorAll('[role="tab"]'));
         const panels = Array.from(tabsContainer.querySelectorAll('[role="tabpanel"]'));
 
+        // Keep the selected tab, visible panel, and keyboard focus in sync.
         const activateTab = (selectedTab, moveFocus = false) => {
             tabs.forEach((tab) => {
                 const isSelected = tab === selectedTab;
@@ -40,9 +43,11 @@ if (aboutPage) {
             }
         };
 
+        // Enable the controls only after their behavior is ready; the HTML fallback stays readable otherwise.
         tabsContainer.hidden = false;
         activateTab(tabs.find((tab) => tab.getAttribute("aria-selected") === "true") || tabs[0]);
 
+        // Support both mouse clicks and keyboard navigation for accessible tabs.
         tabs.forEach((tab, index) => {
             tab.addEventListener("click", () => activateTab(tab));
             tab.addEventListener("keydown", (event) => {
@@ -68,6 +73,7 @@ if (aboutPage) {
     const mapElement = aboutPage.querySelector("#impact-map");
     const mapStatus = aboutPage.querySelector("#map-status");
     if (mapElement && mapStatus) {
+        // Leaflet is loaded from a CDN, so keep the country list useful if it is unavailable.
         if (window.L) {
             const map = window.L.map(mapElement, {
                 scrollWheelZoom: false
@@ -78,6 +84,7 @@ if (aboutPage) {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
 
+            // These coordinates are illustrative regional references, not confirmed project sites.
             const countryMarkers = [
                 {
                     name: "South Africa",
@@ -103,12 +110,14 @@ if (aboutPage) {
                 popup.append(title, document.createElement("br"));
                 popup.append(`${location.city} is shown as an illustrative regional reference point, not a confirmed project site.`);
 
+                // Build popup content with text nodes rather than inserting HTML from data.
                 window.L.marker(location.coordinates)
                     .addTo(map)
                     .bindPopup(popup);
             });
 
             mapStatus.textContent = "Interactive map loaded. Select a marker for more information.";
+            // Reports missing map tiles separately from a missing map library.
             tileLayer.on("tileerror", () => {
                 mapStatus.textContent = "Map tiles could not be loaded. The countries served are South Africa, Mozambique and Lesotho.";
             });
@@ -126,6 +135,8 @@ if (aboutPage) {
         const closeButton = lightbox.querySelector(".lightbox-close");
         let currentImageIndex = 0;
 
+        // One helper updates the image, its accessible description and its caption together.
+        // Wrap around at each end so previous/next navigation always has an image to show.
         const showImage = (index) => {
             currentImageIndex = (index + galleryItems.length) % galleryItems.length;
             const selectedItem = galleryItems[currentImageIndex];
@@ -134,6 +145,7 @@ if (aboutPage) {
             lightboxCaption.textContent = selectedItem.dataset.galleryCaption;
         };
 
+        // A single listener handles every gallery button, including clicks on its image or caption.
         gallery.addEventListener("click", (event) => {
             const selectedItem = event.target.closest("[data-gallery-image]");
             if (!selectedItem) {
@@ -152,6 +164,7 @@ if (aboutPage) {
             showImage(currentImageIndex + 1);
         });
         closeButton.addEventListener("click", () => lightbox.close());
+        // Closes only when the dimmed backdrop is clicked, not when the photo itself is clicked.
         lightbox.addEventListener("click", (event) => {
             if (event.target === lightbox) {
                 lightbox.close();
