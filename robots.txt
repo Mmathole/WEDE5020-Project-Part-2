@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /WEDE5020-Project-Part-2/
+Disallow: /WEDE5020-Project-Part-2/documents/
+Disallow: /WEDE5020-Project-Part-2/Private%20%28Proposals%29/
+Disallow: /WEDE5020-Project-Part-2/text/
+
+Sitemap: https://mmathole.github.io/WEDE5020-Project-Part-2/sitemap.xml

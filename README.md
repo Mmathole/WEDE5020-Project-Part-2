@@ -70,9 +70,10 @@ Budget
 
 ## Contact and enquiry form service
 
-The contact and enquiry forms submit in the background to the Node.js endpoint at
-`/api/contact`. The server validates the fields again and sends the message using
-Nodemailer. These forms do not send email directly from the visitor's browser.
+When the site runs with its Node.js server, the contact and enquiry forms submit
+in the background to `/api/contact`. The server validates the fields again and
+sends the message using Nodemailer. GitHub Pages cannot run that server; its
+forms open a pre-filled email draft instead, as described below.
 
 ### Local setup
 
@@ -97,11 +98,45 @@ Nodemailer. These forms do not send email directly from the visitor's browser.
 4. Open `http://localhost:3000`. Visit `/health` to check that the server is
    responding.
 
-Production hosting must run this Node.js server (or an equivalent serverless
-endpoint) and set `SITE_ORIGIN` to the exact public site origin. A static-only
-host cannot process the forms. Configure SMTP credentials through the hosting
-provider's secret/environment-variable settings; successful delivery also
-depends on the SMTP provider allowing the configured sender.
+Production hosting that sends form emails directly must run this Node.js server
+(or an equivalent serverless endpoint) and set `SITE_ORIGIN` to the exact public
+site origin. Configure SMTP credentials through the hosting provider's
+secret/environment-variable settings; successful delivery also depends on the
+SMTP provider allowing the configured sender.
+
+## Publish the static website with GitHub Pages
+
+The workflow in `.github/workflows/pages.yml` publishes the public pages when
+changes are pushed to `main`. It copies only the HTML pages, stylesheet,
+browser script, crawler files, and optimized images into the Pages artifact.
+Project documents, proposals, source server code, and mail configuration are
+not published.
+
+1. Push the repository to GitHub.
+2. In the repository, open **Settings → Pages** and select **GitHub Actions**
+   as the build and deployment source.
+3. Push a commit to `main`, or run **Deploy static website to GitHub Pages**
+   from the **Actions** tab. Wait for the workflow's build and deploy jobs to
+   complete.
+4. Open `https://mmathole.github.io/WEDE5020-Project-Part-2/` and check its
+   pages, `robots.txt`, and `sitemap.xml`. The repository owner or a custom
+   domain change requires updating the canonical links, sitemap, and robots
+   sitemap address.
+
+GitHub Pages is static hosting; it cannot run `server.js` or Nodemailer. On the
+Pages version, submitting a contact or enquiry form opens a pre-filled draft in
+the visitor's email application. The visitor must review and send that draft.
+For server-side email submission, use the local Node.js service or deploy an
+authorized backend separately.
+
+The Pages workflow publishes from an explicit file allowlist, which is the main
+protection against accidentally exposing private project materials. The
+included `robots.txt` gives crawlers guidance but is not access control. On a
+`github.io` project site, search engines may only honor robots rules served at
+the host root; use your own domain or its root Pages site if you need a
+site-specific robots policy. GitHub Pages also does not let this repository set
+HTTP security headers, so the public pages use a restrictive Content Security
+Policy meta tag where supported.
 
   ## Screenshot evidence
   ### Desktop

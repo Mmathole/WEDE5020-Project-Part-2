@@ -159,7 +159,7 @@ a:hover {
     -------------------------*/
     .hero {
         background: linear-gradient(rgba(13, 70, 39, 0.78), rgba(20, 90, 50, 0.78)),
-                    url('../images/lunchbox-fund-school-meals-hero.png') center/cover no-repeat;
+                    url('../images/lunchbox-fund-school-meals-hero-optimized.jpg') center/cover no-repeat;
         color: #f4f8f3;
         text-align: center;
         min-height: 430px;

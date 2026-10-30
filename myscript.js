@@ -430,6 +430,23 @@ ajaxForms.forEach((form) => {
         // FormData includes only enabled fields, so hidden topic-specific answers are not
         // accidentally sent. Convert the entries to JSON for the server endpoint.
         const formData = Object.fromEntries(new FormData(form).entries());
+
+        // GitHub Pages cannot run the Node API, so prepare an email draft instead.
+        // The visitor must still review and send it in their own email application.
+        if (window.location.hostname.endsWith(".github.io")) {
+            const subject = formData.formType === "enquiry" ? "Website enquiry" : "Website contact";
+            const body = Object.entries(formData)
+                .filter(([name]) => name !== "website" && name !== "formType")
+                .map(([name, value]) => `${name.replace(/([A-Z])/g, " $1").replace(/^./, (letter) => letter.toUpperCase())}: ${value}`)
+                .join("\n\n");
+            const emailDraft = `mailto:info@thelunchboxfund.co.za?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+            status.className = "form-status";
+            status.textContent = "Your email app should open with a draft. Review it and press Send there; your message has not been sent yet.";
+            window.location.href = emailDraft;
+            return;
+        }
+
         submitButton.disabled = true;
         submitButton.textContent = "Sending...";
         status.className = "form-status";

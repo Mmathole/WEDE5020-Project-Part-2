@@ -1,0 +1,58 @@
+name: Deploy static website to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Assemble public website files
+        shell: bash
+        run: |
+          mkdir -p _site/css_assets _site/images
+          cp index.html about.html programs.html donate.html contact.html enquiry.html myscript.js robots.txt sitemap.xml _site/
+          cp css_assets/style.css _site/css_assets/
+          cp images/lunchbox-fund-logo-optimized.png \
+            images/lunchbox-fund-school-meals-hero-optimized.jpg \
+            images/community-school-meal-service-khalil-radi-optimized.jpg \
+            images/schoolchildren-together-bennett-tobias-optimized.jpg \
+            images/learning-community-classroom-rewired-digital-optimized.jpg \
+            images/lunchbox-fund-community-support-optimized.jpg \
+            _site/images/
+          touch _site/.nojekyll
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
