@@ -1,12 +1,16 @@
 const aboutPage = document.querySelector(".about-page");
 
+// ABOUT PAGE: scroll reveals, accessible tabs, the regional map, and the photo lightbox.
 // The About page has extra interactions that do not exist on the rest of the site.
 // Checking for its body class keeps those features from running on unrelated pages.
 if (aboutPage) {
+    // CSS keeps enhanced sections hidden until this script starts. Adding this class
+    // turns on those styles only when JavaScript is available to reveal the sections.
     aboutPage.classList.add("js-enabled");
 
     const revealItems = aboutPage.querySelectorAll(".reveal");
     // Reveal each section as it scrolls into view instead of animating the whole page at once.
+    // The threshold means the observer waits until a small part of a section is visible.
     // If the browser lacks IntersectionObserver, show everything so content never stays hidden.
     if ("IntersectionObserver" in window) {
         const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -31,12 +35,14 @@ if (aboutPage) {
         // A tab's ARIA state, keyboard stop, and matching content panel must always agree.
         const activateTab = (selectedTab, moveFocus = false) => {
             tabs.forEach((tab) => {
+                // Roving tabindex leaves only the active tab in the normal Tab key order.
                 const isSelected = tab === selectedTab;
                 tab.setAttribute("aria-selected", String(isSelected));
                 tab.tabIndex = isSelected ? 0 : -1;
             });
 
             panels.forEach((panel) => {
+                // The selected tab points to its panel through aria-controls.
                 panel.hidden = panel.id !== selectedTab.getAttribute("aria-controls");
             });
 
@@ -77,8 +83,7 @@ if (aboutPage) {
     const mapElement = aboutPage.querySelector("#impact-map");
     const mapStatus = aboutPage.querySelector("#map-status");
     if (mapElement && mapStatus) {
-        // Leaflet is downloaded separately, so a connection or CDN problem must not hide
-        // the plain-text country list or leave visitors with an unexplained empty map.
+        // Leaflet is loaded from a CDN, so keep the country list useful if it is unavailable.
         if (window.L) {
             const map = window.L.map(mapElement, {
                 scrollWheelZoom: false
@@ -136,6 +141,8 @@ if (aboutPage) {
 
     const gallery = aboutPage.querySelector("[data-gallery]");
     const lightbox = aboutPage.querySelector(".lightbox");
+    // The native dialog API supplies focus handling and Escape-to-close behavior.
+    // Leave the gallery as ordinary buttons if this browser does not support that API.
     if (gallery && lightbox && typeof lightbox.showModal === "function") {
         const galleryItems = Array.from(gallery.querySelectorAll("[data-gallery-image]"));
         const lightboxImage = lightbox.querySelector(".lightbox-image");
@@ -181,6 +188,7 @@ if (aboutPage) {
             }
         });
         lightbox.addEventListener("keydown", (event) => {
+            // Let keyboard users browse images without closing the dialog or using its buttons.
             if (event.key === "ArrowLeft") {
                 event.preventDefault();
                 showImage(currentImageIndex - 1);
@@ -196,6 +204,7 @@ const programsGrid = document.querySelector("[data-program-grid]");
 const programControls = document.querySelector("[data-program-controls]");
 const programResults = document.querySelector("[data-program-results]");
 
+// PROGRAMS PAGE: search, focus filtering, alphabetical sorting, and result announcements.
 // Search and filter controls are only present on the Programs page.
 // The original cards stay in the HTML as a useful fallback until this setup is complete.
 if (programsGrid && programControls && programResults) {
@@ -232,6 +241,7 @@ if (programsGrid && programControls && programResults) {
 
         const matchingPrograms = programs
             .filter((program) => {
+                // A program must match both the text query and the selected focus area.
                 const matchesSearch = `${program.title} ${program.description}`
                     .toLocaleLowerCase()
                     .includes(searchTerm);
@@ -239,6 +249,8 @@ if (programsGrid && programControls && programResults) {
                 return matchesSearch && matchesCategory;
             })
             .sort((first, second) => {
+                // localeCompare gives a consistent alphabetic comparison; reversing its
+                // result produces the descending order without changing the source list.
                 const nameOrder = first.title.localeCompare(second.title);
                 return sortOrder === "za" ? -nameOrder : nameOrder;
             });
@@ -264,6 +276,8 @@ if (programsGrid && programControls && programResults) {
         programsGrid.replaceChildren(...cards);
 
         if (matchingPrograms.length === 0) {
+            // Keep the grid informative when filters remove every card instead of leaving
+            // visitors to guess whether the search is still working.
             const emptyMessage = document.createElement("p");
             emptyMessage.className = "program-empty";
             emptyMessage.textContent = "No programs match your search. Try another word or choose a different focus area.";
@@ -271,6 +285,7 @@ if (programsGrid && programControls && programResults) {
         }
 
         const countLabel = matchingPrograms.length === 1 ? "program" : "programs";
+        // This live status announces result-count changes to assistive technology too.
         programResults.textContent = `Showing ${matchingPrograms.length} ${countLabel}.`;
     };
 
@@ -284,17 +299,21 @@ if (programsGrid && programControls && programResults) {
     sortSelect.addEventListener("change", renderPrograms);
 }
 
+// CONTACT AND ENQUIRY FORMS: validate locally, send JSON, and report the server's reply.
 const ajaxForms = document.querySelectorAll("[data-ajax-form]");
 
 // The phone input accepts familiar punctuation, but must contain 7 to 15 actual digits.
 // An empty value is valid only for the optional phone field on the contact form.
 const validatePhoneField = (phoneField) => {
+    // Count only numeric characters, while the separate character check rejects letters
+    // and punctuation outside the set commonly used to format a phone number.
     const digits = phoneField.value.replace(/\D/g, "");
     const isOptionalAndEmpty = !phoneField.required && phoneField.value.trim() === "";
     const usesAllowedCharacters = /^[+0-9(). -]+$/.test(phoneField.value);
     const isValid = isOptionalAndEmpty
         || (usesAllowedCharacters && digits.length >= 7 && digits.length <= 15);
 
+    // A custom validity message integrates this rule with the browser's normal form checks.
     phoneField.setCustomValidity(isValid ? "" : "Enter a phone number using only digits and common phone punctuation, with 7 to 15 digits.");
     phoneField.setAttribute("aria-invalid", String(!isValid));
     return isValid;
@@ -348,8 +367,12 @@ ajaxForms.forEach((form) => {
             String(today.getDate()).padStart(2, "0")
         ].join("-");
         const volunteerDate = form.querySelector("#volunteer-date");
+        // The date field is optional, but setting its minimum prevents picking a past date.
         volunteerDate.min = localToday;
 
+        // Keep the short explanation connected to the selected enquiry. These answers
+        // describe how the organization will respond; they do not promise fixed pricing
+        // or availability that the site cannot verify.
         const enquiryResponses = {
             program: "We can share details about the program you choose. The site does not list a fixed cost or live capacity, so the team will confirm current arrangements.",
             volunteer: "Volunteer roles and start dates depend on current needs. The team can confirm which opportunities are available.",
@@ -375,10 +398,13 @@ ajaxForms.forEach((form) => {
         };
 
         enquiryType.addEventListener("change", updateEnquiryFields);
+        // Apply the initial hidden/required states before the visitor touches the form.
         updateEnquiryFields();
     }
 
     form.addEventListener("submit", async (event) => {
+        // The browser would normally navigate to the action URL after submission.
+        // Prevent that navigation because fetch below sends the same data in the background.
         event.preventDefault();
 
         // Apply the custom phone rule first, then ask the browser to check required fields,
@@ -391,6 +417,8 @@ ajaxForms.forEach((form) => {
         }
 
         if (!form.reportValidity()) {
+            // Focus the first problem so keyboard users can fix it immediately; the
+            // captured invalid event above places its explanation in the live status.
             const firstInvalidField = form.querySelector(":invalid");
             firstInvalidField?.setAttribute("aria-invalid", "true");
             firstInvalidField?.focus();
@@ -414,8 +442,12 @@ ajaxForms.forEach((form) => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData)
             });
+            // A server or proxy may return an empty/non-JSON error body; in that case use
+            // the generic message below rather than failing while trying to read the reply.
             const reply = await result.json().catch(() => ({}));
 
+            // Treat every non-2xx HTTP response as a failed submission and show the
+            // specific explanation supplied by the backend when one is available.
             if (!result.ok) {
                 throw new Error(reply.message || "We could not send your message. Please try again later.");
             }
