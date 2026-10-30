@@ -1,11 +1,13 @@
 const aboutPage = document.querySelector(".about-page");
 
-// Keep this page-specific behavior from affecting the site's other pages.
+// The About page has extra interactions that do not exist on the rest of the site.
+// Checking for its body class keeps those features from running on unrelated pages.
 if (aboutPage) {
     aboutPage.classList.add("js-enabled");
 
     const revealItems = aboutPage.querySelectorAll(".reveal");
-    // Animate sections only as they enter the viewport, and show them all if unsupported.
+    // Reveal each section as it scrolls into view instead of animating the whole page at once.
+    // If the browser lacks IntersectionObserver, show everything so content never stays hidden.
     if ("IntersectionObserver" in window) {
         const revealObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach((entry) => {
@@ -26,7 +28,7 @@ if (aboutPage) {
         const tabs = Array.from(tabsContainer.querySelectorAll('[role="tab"]'));
         const panels = Array.from(tabsContainer.querySelectorAll('[role="tabpanel"]'));
 
-        // Keep the selected tab, visible panel, and keyboard focus in sync.
+        // A tab's ARIA state, keyboard stop, and matching content panel must always agree.
         const activateTab = (selectedTab, moveFocus = false) => {
             tabs.forEach((tab) => {
                 const isSelected = tab === selectedTab;
@@ -43,11 +45,13 @@ if (aboutPage) {
             }
         };
 
-        // Enable the controls only after their behavior is ready; the HTML fallback stays readable otherwise.
+        // The HTML hides the interactive tabs until their click and keyboard behavior is ready.
+        // This leaves the readable non-JavaScript version available if setup cannot run.
         tabsContainer.hidden = false;
         activateTab(tabs.find((tab) => tab.getAttribute("aria-selected") === "true") || tabs[0]);
 
-        // Support both mouse clicks and keyboard navigation for accessible tabs.
+        // Arrow keys move between tabs and wrap at either end; Home and End jump to the ends.
+        // Focusing the new tab makes keyboard navigation match the visible selection.
         tabs.forEach((tab, index) => {
             tab.addEventListener("click", () => activateTab(tab));
             tab.addEventListener("keydown", (event) => {
@@ -73,7 +77,8 @@ if (aboutPage) {
     const mapElement = aboutPage.querySelector("#impact-map");
     const mapStatus = aboutPage.querySelector("#map-status");
     if (mapElement && mapStatus) {
-        // Leaflet is loaded from a CDN, so keep the country list useful if it is unavailable.
+        // Leaflet is downloaded separately, so a connection or CDN problem must not hide
+        // the plain-text country list or leave visitors with an unexplained empty map.
         if (window.L) {
             const map = window.L.map(mapElement, {
                 scrollWheelZoom: false
@@ -84,7 +89,8 @@ if (aboutPage) {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
 
-            // These coordinates are illustrative regional references, not confirmed project sites.
+            // These city coordinates help orient the regional map; they are illustrative,
+            // not exact office or project locations, so the marker text makes that clear.
             const countryMarkers = [
                 {
                     name: "South Africa",
@@ -110,14 +116,16 @@ if (aboutPage) {
                 popup.append(title, document.createElement("br"));
                 popup.append(`${location.city} is shown as an illustrative regional reference point, not a confirmed project site.`);
 
-                // Build popup content with text nodes rather than inserting HTML from data.
+                // Use text nodes for marker content so location text is displayed as text,
+                // rather than being interpreted by the browser as HTML.
                 window.L.marker(location.coordinates)
                     .addTo(map)
                     .bindPopup(popup);
             });
 
             mapStatus.textContent = "Interactive map loaded. Select a marker for more information.";
-            // Reports missing map tiles separately from a missing map library.
+            // The map library can load even when the map imagery cannot, so report tile
+            // failures separately and keep the country names available in the status.
             tileLayer.on("tileerror", () => {
                 mapStatus.textContent = "Map tiles could not be loaded. The countries served are South Africa, Mozambique and Lesotho.";
             });
@@ -135,8 +143,8 @@ if (aboutPage) {
         const closeButton = lightbox.querySelector(".lightbox-close");
         let currentImageIndex = 0;
 
-        // One helper updates the image, its accessible description and its caption together.
-        // Wrap around at each end so previous/next navigation always has an image to show.
+        // Keep the selected image, its alt text, and its visible caption in step.
+        // The modulo calculation wraps from the final photo to the first and back again.
         const showImage = (index) => {
             currentImageIndex = (index + galleryItems.length) % galleryItems.length;
             const selectedItem = galleryItems[currentImageIndex];
@@ -145,7 +153,8 @@ if (aboutPage) {
             lightboxCaption.textContent = selectedItem.dataset.galleryCaption;
         };
 
-        // A single listener handles every gallery button, including clicks on its image or caption.
+        // Listen on the gallery container so clicks on a button's image or caption still
+        // open the correct photo without attaching a separate handler to every child.
         gallery.addEventListener("click", (event) => {
             const selectedItem = event.target.closest("[data-gallery-image]");
             if (!selectedItem) {
@@ -164,7 +173,8 @@ if (aboutPage) {
             showImage(currentImageIndex + 1);
         });
         closeButton.addEventListener("click", () => lightbox.close());
-        // Closes only when the dimmed backdrop is clicked, not when the photo itself is clicked.
+        // A dialog receives clicks on its backdrop as well as its contents; close it only
+        // when the backdrop itself was clicked, so interacting with the photo won't dismiss it.
         lightbox.addEventListener("click", (event) => {
             if (event.target === lightbox) {
                 lightbox.close();
@@ -186,8 +196,11 @@ const programsGrid = document.querySelector("[data-program-grid]");
 const programControls = document.querySelector("[data-program-controls]");
 const programResults = document.querySelector("[data-program-results]");
 
+// Search and filter controls are only present on the Programs page.
+// The original cards stay in the HTML as a useful fallback until this setup is complete.
 if (programsGrid && programControls && programResults) {
-    // Keep the program data separate from the page markup so results can be filtered and rebuilt.
+    // Keep the program details in one data list; each change to search, focus, or sort
+    // uses this same source to build a consistent set of result cards.
     const programs = [
         {
             title: "School Feeding",
@@ -211,6 +224,8 @@ if (programsGrid && programControls && programResults) {
     const sortSelect = programControls.querySelector("#program-sort");
 
     const renderPrograms = () => {
+        // Read all three controls together, then apply both filters before sorting the matches.
+        // Searching both title and description lets visitors find programs by topic words.
         const searchTerm = searchInput.value.trim().toLocaleLowerCase();
         const selectedCategory = categorySelect.value;
         const sortOrder = sortSelect.value;
@@ -228,7 +243,8 @@ if (programsGrid && programControls && programResults) {
                 return sortOrder === "za" ? -nameOrder : nameOrder;
             });
 
-        // Build cards with DOM text nodes so program text is never treated as HTML.
+        // Create the result cards with DOM elements and textContent so program copy is
+        // rendered literally, not parsed as markup.
         const cards = matchingPrograms.map((program) => {
             const card = document.createElement("article");
             const title = document.createElement("h2");
@@ -244,7 +260,7 @@ if (programsGrid && programControls && programResults) {
             return card;
         });
 
-        // Replace the previous results together so sorting and filtering stay in sync.
+        // Replace the old cards as one operation so the grid always matches the latest filters.
         programsGrid.replaceChildren(...cards);
 
         if (matchingPrograms.length === 0) {
@@ -258,7 +274,8 @@ if (programsGrid && programControls && programResults) {
         programResults.textContent = `Showing ${matchingPrograms.length} ${countLabel}.`;
     };
 
-    // Keep the original cards available until the controls and renderer are ready.
+    // Reveal the controls only when the renderer is ready; this avoids displaying filters
+    // that cannot work if the script fails before setup is finished.
     programControls.hidden = false;
     renderPrograms();
     programControls.addEventListener("submit", (event) => event.preventDefault());
@@ -269,7 +286,8 @@ if (programsGrid && programControls && programResults) {
 
 const ajaxForms = document.querySelectorAll("[data-ajax-form]");
 
-// Check phone numbers by counting digits, while allowing familiar punctuation.
+// The phone input accepts familiar punctuation, but must contain 7 to 15 actual digits.
+// An empty value is valid only for the optional phone field on the contact form.
 const validatePhoneField = (phoneField) => {
     const digits = phoneField.value.replace(/\D/g, "");
     const isOptionalAndEmpty = !phoneField.required && phoneField.value.trim() === "";
@@ -283,6 +301,8 @@ const validatePhoneField = (phoneField) => {
 };
 
 ajaxForms.forEach((form) => {
+    // Each form can have a different set of optional features; look them up within the
+    // current form so contact and enquiry behavior stays independent.
     const phoneField = form.querySelector('input[type="tel"]');
     const enquiryType = form.querySelector("[data-enquiry-type]");
     const response = form.querySelector("[data-enquiry-response]");
@@ -290,10 +310,13 @@ ajaxForms.forEach((form) => {
     const submitButton = form.querySelector('button[type="submit"]');
 
     if (phoneField) {
+        // Validate while people edit and when they leave the field, so mistakes are
+        // identified before submission instead of only after the send button is pressed.
         phoneField.addEventListener("input", () => validatePhoneField(phoneField));
         phoneField.addEventListener("blur", () => validatePhoneField(phoneField));
     }
 
+    // Clear the visible invalid marker as soon as a field becomes valid again.
     form.querySelectorAll("input, select, textarea").forEach((field) => {
         field.addEventListener("input", () => {
             if (field.matches(":valid")) {
@@ -307,6 +330,8 @@ ajaxForms.forEach((form) => {
         });
     });
 
+    // Native browser validation may stop submission before the submit handler runs.
+    // Capture its invalid event so the same accessible error status is still shown.
     form.addEventListener("invalid", (event) => {
         event.target.setAttribute("aria-invalid", "true");
         status.className = "form-status form-status--error";
@@ -314,6 +339,8 @@ ajaxForms.forEach((form) => {
     }, true);
 
     if (enquiryType && response) {
+        // Date inputs use the visitor's local calendar date as the earliest volunteer
+        // start date, preventing selection of a date that has already passed.
         const today = new Date();
         const localToday = [
             today.getFullYear(),
@@ -330,7 +357,8 @@ ajaxForms.forEach((form) => {
             general: "Tell us what you would like to know and the team can point you in the right direction."
         };
 
-        // Show only the questions for the chosen topic and require its relevant selection.
+        // Show only fields that match the selected enquiry topic. Disabled hidden fields
+        // are omitted from submission, and the relevant dropdown becomes required.
         const updateEnquiryFields = () => {
             const selectedTopic = enquiryType.value;
             form.querySelectorAll("[data-topic-fields]").forEach((group) => {
@@ -353,6 +381,8 @@ ajaxForms.forEach((form) => {
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
+        // Apply the custom phone rule first, then ask the browser to check required fields,
+        // email format, and character limits before any data is sent to the server.
         if (phoneField && !validatePhoneField(phoneField)) {
             status.className = "form-status form-status--error";
             status.textContent = "Please enter a valid phone number before sending.";
@@ -368,6 +398,8 @@ ajaxForms.forEach((form) => {
         }
 
         const originalButtonText = submitButton.textContent;
+        // FormData includes only enabled fields, so hidden topic-specific answers are not
+        // accidentally sent. Convert the entries to JSON for the server endpoint.
         const formData = Object.fromEntries(new FormData(form).entries());
         submitButton.disabled = true;
         submitButton.textContent = "Sending...";
@@ -375,7 +407,8 @@ ajaxForms.forEach((form) => {
         status.textContent = "Sending your message securely...";
 
         try {
-            // Send form data in the background so the visitor stays on this page.
+            // Send the message in the background to keep the visitor on this page.
+            // The server performs its own validation and only reports success after delivery.
             const result = await fetch(form.action, {
                 method: form.method.toUpperCase(),
                 headers: { "Content-Type": "application/json" },
@@ -387,6 +420,8 @@ ajaxForms.forEach((form) => {
                 throw new Error(reply.message || "We could not send your message. Please try again later.");
             }
 
+            // Clear private form entries only after the server confirms receipt.
+            // For an enquiry, dispatching change also hides the old topic-specific fields.
             status.className = "form-status form-status--success";
             status.textContent = reply.message || "Your message has been sent. The team will reply using the email address you provided.";
             form.reset();
@@ -397,11 +432,14 @@ ajaxForms.forEach((form) => {
                 enquiryType.dispatchEvent(new Event("change"));
             }
         } catch (error) {
+            // Keep entered values after a failure so the visitor can retry, and distinguish
+            // a network problem from a message returned by the server.
             status.className = "form-status form-status--error";
             status.textContent = error instanceof TypeError
                 ? "We could not reach the message service. Please check your connection and try again."
                 : error.message;
         } finally {
+            // Always restore the submit control, whether the request succeeded or failed.
             submitButton.disabled = false;
             submitButton.textContent = originalButtonText;
         }
