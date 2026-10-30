@@ -232,6 +232,7 @@ if (programsGrid && programControls && programResults) {
     const categorySelect = programControls.querySelector("#program-category");
     const sortSelect = programControls.querySelector("#program-sort");
 
+    // Rebuild from the unfiltered data each time so changing one control never loses results.
     const renderPrograms = () => {
         // Read all three controls together, then apply both filters before sorting the matches.
         // Searching both title and description lets visitors find programs by topic words.

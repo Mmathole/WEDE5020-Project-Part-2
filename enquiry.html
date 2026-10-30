@@ -71,7 +71,7 @@
                 </div>
             </div>
 
-            <!-- The questions change to match a program, volunteer, or sponsor enquiry. -->
+            <!-- Topic-specific questions are revealed by JavaScript; disabled hidden controls are left out of the submitted form. -->
             <section class="enquiry-form-section" aria-labelledby="enquiry-form-heading">
                 <div class="section-heading">
                     <h2 id="enquiry-form-heading">Tell Us What You’re Interested In</h2>
@@ -79,6 +79,7 @@
                 </div>
                 <!-- The form collects only the details needed to reply to this enquiry. -->
                 <div class="form-card">
+                    <!-- The action names the server endpoint used by JavaScript's background request. -->
                     <form class="ajax-contact-form" action="/api/contact" method="post" data-ajax-form>
                         <!-- This hidden field helps the server spot automated spam submissions. -->
                         <div class="form-honeypot" aria-hidden="true">
@@ -113,6 +114,7 @@
                             <small id="enquiry-phone-help">Use 7 to 15 digits. You may include +, spaces, brackets or hyphens.</small>
                         </div>
 
+                        <!-- Each optional group starts hidden and disabled until its topic is selected. -->
                         <div class="form-group" data-topic-fields="program" hidden>
                             <label for="program-interest">Program you are interested in</label>
                             <select id="program-interest" name="programInterest" disabled>
@@ -135,6 +137,7 @@
                             </select>
                         </div>
 
+                        <!-- The date is optional; JavaScript sets its minimum to the visitor's local date. -->
                         <div class="form-group" data-topic-fields="volunteer" hidden>
                             <label for="volunteer-date">Preferred start date (optional)</label>
                             <input id="volunteer-date" name="preferredStartDate" type="date" disabled>
@@ -157,6 +160,7 @@
                             <small id="enquiry-message-help">Please write between 10 and 2,000 characters.</small>
                         </div>
 
+                        <!-- This guidance changes with the selected topic and avoids promising unverified cost or availability. -->
                         <p class="form-response" data-enquiry-response role="status" aria-live="polite">Choose a topic to see what the team can help you with.</p>
                         <button type="submit" class="btn">Send Enquiry</button>
                         <p class="form-status" data-email-status role="status" aria-live="polite"></p>

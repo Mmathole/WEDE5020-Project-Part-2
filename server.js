@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import nodemailer from "nodemailer";
 
 const rootDirectory = path.dirname(fileURLToPath(import.meta.url));
+// Read hosting and mail settings from the environment so secrets stay out of source control.
 const port = Number(process.env.PORT || 3000);
 const allowedOrigin = process.env.SITE_ORIGIN || `http://localhost:${port}`;
 const recipient = process.env.MAIL_TO || "info@thelunchboxfund.co.za";
@@ -13,6 +14,7 @@ const rateLimitWindowMs = 15 * 60 * 1000;
 const rateLimitMaximum = 5;
 const requestsByAddress = new Map();
 
+// Fail at startup instead of accepting messages that cannot be delivered.
 const requiredMailSettings = ["SMTP_HOST", "SMTP_USER", "SMTP_PASS", "MAIL_FROM"];
 const missingMailSettings = requiredMailSettings.filter((setting) => !process.env[setting]);
 
@@ -36,6 +38,7 @@ const mailTransport = nodemailer.createTransport({
     }
 });
 
+// Serve only named public assets; a URL cannot be used to browse private project files.
 const publicFiles = new Map([
     ["/", "index.html"],
     ["/index.html", "index.html"],
@@ -86,6 +89,7 @@ const allowedChoices = {
 };
 
 const setSecurityHeaders = (response) => {
+    // Browser policies reduce the impact of content injection and unwanted embedding.
     response.setHeader("X-Content-Type-Options", "nosniff");
     response.setHeader("X-Frame-Options", "DENY");
     response.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
@@ -105,6 +109,7 @@ const readJsonBody = async (request) => {
     let size = 0;
     const chunks = [];
 
+    // Count bytes while streaming so an oversized request is rejected before parsing.
     for await (const chunk of request) {
         size += chunk.length;
         if (size > maximumBodyBytes) {
@@ -133,6 +138,7 @@ const validateSubmission = (data) => {
         return { error: "Please submit a valid form." };
     }
 
+    // The hidden honeypot is intended for bots; answer as if successful without emailing.
     if (cleanText(data.website)) {
         return { spam: true };
     }
@@ -195,6 +201,7 @@ const validateSubmission = (data) => {
 
         const preferredStartDate = cleanText(data.preferredStartDate);
         if (preferredStartDate) {
+            // Compare against South African local time so date-only input is not shifted by UTC.
             const parsedDate = new Date(`${preferredStartDate}T00:00:00Z`);
             const todayInSouthAfrica = new Intl.DateTimeFormat("en-CA", {
                 timeZone: "Africa/Johannesburg"
@@ -237,6 +244,7 @@ const isRateLimited = (address) => {
         return false;
     }
 
+    // Allow a small burst, then reject requests until this address's window expires.
     previous.count += 1;
     return previous.count > rateLimitMaximum;
 };
@@ -245,6 +253,7 @@ const sendSubmission = async (submission, email) => {
     await mailTransport.sendMail({
         from: process.env.MAIL_FROM,
         to: recipient,
+        // Replies go back to the person who filled in the form, not the site sender address.
         replyTo: email,
         subject: submission.subject,
         text: submission.lines.join("\n\n")
@@ -259,6 +268,7 @@ const serveFile = async (request, response, fileName) => {
         "Content-Type": contentTypes.get(extension) || "application/octet-stream",
         "Cache-Control": extension === ".html" ? "no-cache" : "public, max-age=3600"
     });
+    // HEAD returns the same headers as GET without sending the asset body.
     response.end(request.method === "HEAD" ? undefined : file);
 };
 
@@ -272,6 +282,7 @@ const server = createServer(async (request, response) => {
     }
 
     if (requestUrl.pathname === "/api/contact" && request.method === "POST") {
+        // Check the browser's origin before reading or processing form data.
         if (request.headers.origin !== siteOrigin.origin) {
             sendJson(response, 403, { message: "This form can only be sent from the Lunchbox Fund website." });
             return;
@@ -288,6 +299,7 @@ const server = createServer(async (request, response) => {
             return;
         }
 
+        // Validate on the server even when the browser has already checked the form.
         try {
             const data = await readJsonBody(request);
             const validation = validateSubmission(data);

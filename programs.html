@@ -41,7 +41,7 @@
                 <p>Explore school meals, community outreach and nutrition advocacy that support vulnerable schoolchildren and their education.</p>
             </div>
 
-            <!-- These controls appear when JavaScript is ready; the cards below remain as a no-script fallback. -->
+            <!-- JavaScript reveals these controls only after it can filter the cards below. -->
             <form class="program-controls" data-program-controls hidden role="search">
                 <div class="program-search-field">
                     <label for="program-search">Search programs</label>
@@ -65,8 +65,9 @@
                 </div>
             </form>
 
+            <!-- The live status announces result counts to assistive technology without moving focus. -->
             <p class="program-results" data-program-results role="status" aria-live="polite"></p>
-            <!-- JavaScript filters these program cards; they also work without it. -->
+            <!-- JavaScript replaces these starter cards when filtering; the original content works without JavaScript. -->
             <div class="card-grid program-grid" data-program-grid>
                 <article class="card">
                     <h2>School Feeding</h2>

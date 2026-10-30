@@ -40,7 +40,7 @@
                 <p>Ask us about school feeding programs, child nutrition, volunteering and partnerships.</p>
             </div>
 
-            <!-- Visitors can use these details if they prefer not to use the form. -->
+            <!-- Visitors can use these direct contact methods if they prefer not to use the form. -->
             <section class="contact-grid">
                 <div class="contact-item">
                     <h2>Email</h2>
@@ -62,13 +62,14 @@
                 </div>
             </section>
 
-            <!-- This form sends a validated message to the site's contact endpoint. -->
+            <!-- This form sends a validated message to the site's contact endpoint without leaving the page. -->
             <section class="contact-form-section" aria-labelledby="contact-form-heading">
                 <div class="section-heading">
                     <h2 id="contact-form-heading">Send a General Message</h2>
                     <p>Share your contact details and message. We’ll send it securely to the organization.</p>
                 </div>
                 <div class="form-card">
+                    <!-- The action names the endpoint used by JavaScript's background request. -->
                     <form class="ajax-contact-form" action="/api/contact" method="post" data-ajax-form>
                         <!-- This hidden field helps the server spot automated spam submissions. -->
                         <div class="form-honeypot" aria-hidden="true">
@@ -112,6 +113,7 @@
                         </div>
 
                         <button type="submit" class="btn">Send Message</button>
+                        <!-- JavaScript writes success or error feedback here for screen readers and sighted visitors. -->
                         <p class="form-status" data-email-status role="status" aria-live="polite"></p>
                     </form>
                     <p class="form-note">Your message is sent to the organization for a reply. Please don’t include sensitive personal information.</p>

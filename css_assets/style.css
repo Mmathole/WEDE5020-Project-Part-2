@@ -1,3 +1,4 @@
+/* Start from the same box model and spacing baseline across browsers. */
 * {
     margin: 0;
     padding: 0;
@@ -34,7 +35,7 @@ a:hover {
     color: #0d4d29;
 }
 
-/*Main container keeps content from becoming too wide on large screens*/
+/* Center page content and keep readable line lengths on wide displays. */
 .main-container {
     width: min(1100px, 92%);
     margin: 0 auto;
@@ -152,6 +153,7 @@ a:hover {
         background-color: #35a65f;
     }
 
+    /* The hero's gradient keeps the white headline readable over its photo. */
     /*-------------------------
     Hero section styles
     -------------------------*/
@@ -304,7 +306,7 @@ a:hover {
         padding: 24px;
     }
 
-    /* Program search, category filter, and sort controls. */
+    /* Program search, category filter, and sort controls share one aligned desktop row. */
     .program-controls {
         display: grid;
         grid-template-columns: minmax(220px, 2fr) minmax(160px, 1fr) minmax(160px, 1fr);
@@ -437,6 +439,7 @@ a:hover {
         margin: 0 auto 72px;
     }
 
+    /* Native details/summary elements provide expandable history without custom JavaScript. */
     .history-accordion {
         max-width: 850px;
         margin: 0 auto;
@@ -506,6 +509,7 @@ a:hover {
         display: none;
     }
 
+    /* The selected tab is indicated by an underline as well as its accessible ARIA state. */
     .tab-list {
         display: flex;
         gap: 8px;
@@ -588,6 +592,7 @@ a:hover {
         font-size: 0.92rem;
     }
 
+    /* Reserve map space before Leaflet loads so the surrounding page does not jump. */
     .impact-map {
         z-index: 0;
         min-height: 360px;
@@ -625,6 +630,7 @@ a:hover {
         font-weight: 700;
     }
 
+    /* Matching columns keep the gallery balanced until the mobile rules stack it. */
     .photo-gallery {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -667,6 +673,7 @@ a:hover {
         font-weight: 700;
     }
 
+    /* The native dialog sits above the page; its backdrop dims the content behind it. */
     .lightbox {
         width: min(1000px, calc(100% - 32px));
         max-width: none;
@@ -752,6 +759,7 @@ a:hover {
         text-align: center;
     }
 
+    /* Only hide scroll-reveal sections after JavaScript confirms it can show them again. */
     .about-page.js-enabled .reveal {
         opacity: 0;
         transform: translateY(18px);
@@ -774,6 +782,7 @@ a:hover {
         }
     }
 
+    /* Stack About-page columns and gallery tiles on tablets and narrower screens. */
     @media (max-width: 800px) {
         .about-page .two-column,
         .about-page .photo-gallery {
@@ -853,6 +862,7 @@ a:hover {
         }
     }
 
+    /* Respect the operating system's reduced-motion preference for all About animations. */
     @media (prefers-reduced-motion: reduce) {
         .about-page *,
         .about-page *::before,
@@ -958,6 +968,7 @@ a:hover {
         padding: 32px;
     }
 
+    /* Keep the spam-trap field out of sight and keyboard navigation, but present in the form. */
     .form-honeypot {
         position: absolute;
         left: -10000px;
@@ -1110,6 +1121,7 @@ a:hover {
         color: #f4f8f3;
     }
     
+    /* At tablet widths, stack page grids and let the program search use the full row. */
     /*--------------------------------
     Responsive Design
     Tablet and mobile screen styles

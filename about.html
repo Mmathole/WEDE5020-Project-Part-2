@@ -37,9 +37,7 @@
         </nav>
     </header>
 
-             <!--------------------------------
-                Main Content
-             ----------------------------------->
+    <!-- Main content holds the story, expandable history, accessible tabs, map, and gallery. -->
     <main>
         <section class="content-section">
             <div class="container">
@@ -85,7 +83,7 @@
                     </div>
                 </section>
 
-                <!-- These accessible tabs explain the vision, mission, and values. -->
+                <!-- These accessible tabs explain the vision, mission, and values; JavaScript keeps their ARIA state in sync. -->
                 <section class="about-section reveal" aria-labelledby="purpose-heading">
                     <div class="section-heading">
                         <p class="eyebrow">What guides our work</p>
@@ -113,7 +111,7 @@
                             <p>Our work is grounded in care, dignity and collaboration with the communities, schools and local partners who support children every day.</p>
                         </div>
                     </div>
-                    <!-- Keep the vision, mission, and values available when JavaScript is disabled. -->
+                    <!-- Keep the vision, mission, and values available when JavaScript is disabled or fails to load. -->
                     <noscript>
                         <div class="values-fallback">
                             <h3>Our vision</h3>
@@ -133,7 +131,7 @@
                     </div>
                 </section>
 
-                <!-- The map is interactive; the country list remains available as a text alternative. -->
+                <!-- The map is interactive; the country list remains available as a text alternative and fallback. -->
                 <section class="about-section reveal" aria-labelledby="map-heading">
                     <div class="section-heading">
                         <p class="eyebrow">Southern Africa</p>
@@ -173,7 +171,7 @@
                     </div>
                 </section>
 
-                <!-- The dialog is populated by JavaScript and supports close and next/previous controls. -->
+                <!-- JavaScript copies the chosen gallery image and caption into this native dialog. -->
                 <dialog class="lightbox" aria-label="Photo viewer" aria-describedby="lightbox-caption">
                     <div class="lightbox-content">
                         <button class="lightbox-close" type="button" aria-label="Close photo viewer" autofocus>&times;</button>
