@@ -7,6 +7,7 @@
     <title>Contact The Lunchbox Fund | Programs &amp; Partnerships</title>
     <meta name="description" content="Contact The Lunchbox Fund about school meals, child nutrition programs, volunteering and community partnerships in Southern Africa.">
     <link rel="stylesheet" href="./css_assets/style.css">
+    <script src="./myscript.js" defer></script>
 </head>
 <body>
     <!-- The header introduces the organization and links to every main page. -->
@@ -59,7 +60,59 @@
                     </p>
                 </div>
             </section>
-            <p class="text-center">Learn about <a href="programs.html">our school feeding programs</a> or <a href="donate.html">ways to support school meals</a>.</p>
+
+            <!-- This form gathers a general message and prepares it for the organization's email. -->
+            <section class="contact-form-section" aria-labelledby="contact-form-heading">
+                <div class="section-heading">
+                    <h2 id="contact-form-heading">Send a General Message</h2>
+                    <p>Share your contact details and message. Your email app will open with a draft for you to review and send.</p>
+                </div>
+                <div class="form-card">
+                    <form class="email-draft-form" action="mailto:info@thelunchboxfund.co.za" method="get" data-email-to="info@thelunchboxfund.co.za" data-form-kind="contact">
+                        <div class="form-group">
+                            <label for="contact-name">Your name</label>
+                            <input id="contact-name" name="name" type="text" autocomplete="name" minlength="2" maxlength="80" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contact-email">Email address</label>
+                            <input id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contact-phone">Phone number (optional)</label>
+                            <input id="contact-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="25" aria-describedby="contact-phone-help">
+                            <small id="contact-phone-help">If included, use 7 to 15 digits. You may include +, spaces, brackets or hyphens.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contact-topic">Type of message</label>
+                            <select id="contact-topic" name="messageType" required>
+                                <option value="">Choose a topic</option>
+                                <option>General question</option>
+                                <option>School feeding programs</option>
+                                <option>Donation or fundraising</option>
+                                <option>Volunteering</option>
+                                <option>Sponsorship or partnership</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contact-message">Your message</label>
+                            <textarea id="contact-message" name="message" minlength="10" maxlength="2000" rows="6" required aria-describedby="contact-message-help"></textarea>
+                            <small id="contact-message-help">Please write between 10 and 2,000 characters.</small>
+                        </div>
+
+                        <button type="submit" class="btn">Prepare Message Email</button>
+                        <p class="form-status" data-email-status role="status" aria-live="polite"></p>
+                        <a class="email-fallback-link" data-email-fallback hidden>Open the prepared email</a>
+                    </form>
+                    <p class="form-note">The website does not send or store your message. Your email app must be set up to send it.</p>
+                </div>
+            </section>
+
+            <p class="text-center">Learn about <a href="programs.html">our school feeding programs</a>, <a href="donate.html">ways to support school meals</a>, or <a href="enquiry.html">volunteer and sponsorship enquiries</a>.</p>
         </div>
     </main>
 

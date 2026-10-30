@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- This title and summary describe volunteer and partnership enquiries. -->
-    <title>Volunteer &amp; Partner Enquiries | The Lunchbox Fund</title>
-    <meta name="description" content="Find out how to volunteer, fundraise or partner with The Lunchbox Fund to support child nutrition and education in Southern Africa.">
+    <title>Program, Volunteer &amp; Sponsor Enquiries | The Lunchbox Fund</title>
+    <meta name="description" content="Ask The Lunchbox Fund about school feeding programs, volunteer roles, sponsorship and partnerships supporting child nutrition and education.">
     <link rel="stylesheet" href="./css_assets/style.css">
+    <script src="./myscript.js" defer></script>
 </head>
 <body>
     <!-- The header introduces the organization and links to every main page. -->
@@ -36,19 +37,19 @@
         <div class="container">
             <div class="section-heading">
                 <h1>Volunteer and Partner Enquiries</h1>
-                <p>We welcome volunteers and partners who share our mission to provide nutritious meals to vulnerable schoolchildren.</p>
+                <p>Ask about school feeding programs, volunteering or sponsorship. Choose a topic and we’ll show you what information to include.</p>
             </div>
 
             <div class="two-column">
                 <div>
                     <p>
-                        If you would like to support The Lunchbox Fund, please reach out to us through the contact details provided below.
+                        Program costs and volunteer or sponsorship availability depend on current needs. The team can provide the latest details after reviewing your enquiry.
                     </p>
                     <p>
-                        We look forward to collaborating with you to make a positive impact on children's lives.
+                        This website prepares an email draft for you. Your email app must be set up to send it; the site does not send or store form submissions.
                     </p>
 
-                    <div class="contact-grid">
+                    <div class="contact-grid enquiry-contact">
                         <div class="contact-item">
                             <h2>Email</h2>
                             <p><a href="mailto:info@thelunchboxfund.co.za">info@thelunchboxfund.co.za</a></p>
@@ -67,9 +68,97 @@
                 </div>
 
                 <div>
-                    <img src="./images/lunchbox-fund-community-support.jpeg" alt="Two community cooks prepare nutritious meals for children" class="main-image">
+                    <img src="./images/lunchbox-fund-community-support.jpeg" alt="Two community cooks prepare nutritious meals for children" class="main-image" loading="lazy">
                 </div>
             </div>
+
+            <!-- The questions change to match a program, volunteer, or sponsor enquiry. -->
+            <section class="enquiry-form-section" aria-labelledby="enquiry-form-heading">
+                <div class="section-heading">
+                    <h2 id="enquiry-form-heading">Tell Us What You’re Interested In</h2>
+                    <p>Choose a topic to see relevant questions. Costs and availability are confirmed by the team because they depend on current needs.</p>
+                </div>
+                <div class="form-card">
+                    <form class="email-draft-form" action="mailto:info@thelunchboxfund.co.za" method="get" data-email-to="info@thelunchboxfund.co.za" data-form-kind="enquiry">
+                        <div class="form-group">
+                            <label for="enquiry-type">What would you like to ask about?</label>
+                            <select id="enquiry-type" name="enquiryType" required data-enquiry-type>
+                                <option value="">Choose a topic</option>
+                                <option value="program">A school feeding program</option>
+                                <option value="volunteer">Volunteering</option>
+                                <option value="sponsor">Sponsorship or partnership</option>
+                                <option value="general">Something else</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="enquiry-name">Your name</label>
+                            <input id="enquiry-name" name="name" type="text" autocomplete="name" minlength="2" maxlength="80" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="enquiry-email">Email address</label>
+                            <input id="enquiry-email" name="email" type="email" autocomplete="email" maxlength="254" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="enquiry-phone">Phone number</label>
+                            <input id="enquiry-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="25" aria-describedby="enquiry-phone-help" required>
+                            <small id="enquiry-phone-help">Use 7 to 15 digits. You may include +, spaces, brackets or hyphens.</small>
+                        </div>
+
+                        <div class="form-group" data-topic-fields="program" hidden>
+                            <label for="program-interest">Program you are interested in</label>
+                            <select id="program-interest" name="programInterest" disabled>
+                                <option value="">Choose a program</option>
+                                <option>School Feeding</option>
+                                <option>Community Outreach</option>
+                                <option>Advocacy and Awareness</option>
+                                <option>Not sure yet</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" data-topic-fields="volunteer" hidden>
+                            <label for="volunteer-interest">How would you like to help?</label>
+                            <select id="volunteer-interest" name="volunteerInterest" disabled>
+                                <option value="">Choose an area</option>
+                                <option>School or community support</option>
+                                <option>Fundraising</option>
+                                <option>Communications and awareness</option>
+                                <option>Other skills</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" data-topic-fields="volunteer" hidden>
+                            <label for="volunteer-date">Preferred start date (optional)</label>
+                            <input id="volunteer-date" name="preferredStartDate" type="date" disabled>
+                        </div>
+
+                        <div class="form-group" data-topic-fields="sponsor" hidden>
+                            <label for="sponsor-interest">What kind of support are you considering?</label>
+                            <select id="sponsor-interest" name="sponsorInterest" disabled>
+                                <option value="">Choose an option</option>
+                                <option>Financial sponsorship</option>
+                                <option>Food or supplies</option>
+                                <option>Business partnership</option>
+                                <option>Not sure yet</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="enquiry-message">Tell us a little more</label>
+                            <textarea id="enquiry-message" name="message" minlength="10" maxlength="2000" rows="5" required aria-describedby="enquiry-message-help"></textarea>
+                            <small id="enquiry-message-help">Please write between 10 and 2,000 characters.</small>
+                        </div>
+
+                        <p class="form-response" data-enquiry-response role="status" aria-live="polite">Choose a topic to see what the team can help you with.</p>
+                        <button type="submit" class="btn">Prepare Enquiry Email</button>
+                        <p class="form-status" data-email-status role="status" aria-live="polite"></p>
+                        <a class="email-fallback-link" data-email-fallback hidden>Open the prepared email</a>
+                    </form>
+                    <p class="form-note">Selecting the button opens a draft in your email app. Review it and press Send there to contact the organization.</p>
+                </div>
+            </section>
         </div>
     </main>
 

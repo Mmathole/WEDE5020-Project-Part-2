@@ -266,3 +266,102 @@ if (programsGrid && programControls && programResults) {
     categorySelect.addEventListener("change", renderPrograms);
     sortSelect.addEventListener("change", renderPrograms);
 }
+
+const emailDraftForms = document.querySelectorAll(".email-draft-form");
+
+// Check phone numbers by counting digits, while allowing familiar punctuation.
+const validatePhoneField = (phoneField) => {
+    const digits = phoneField.value.replace(/\D/g, "");
+    const isOptionalAndEmpty = !phoneField.required && phoneField.value.trim() === "";
+    const usesAllowedCharacters = /^[+0-9().\s-]+$/.test(phoneField.value);
+    const isValid = isOptionalAndEmpty
+        || (usesAllowedCharacters && digits.length >= 7 && digits.length <= 15);
+
+    phoneField.setCustomValidity(isValid ? "" : "Enter a phone number using only digits and common phone punctuation, with 7 to 15 digits.");
+    phoneField.setAttribute("aria-invalid", String(!isValid));
+    return isValid;
+};
+
+// Prepare a mailto URL so the visitor can review and send the message in their email app.
+const prepareEmailDraft = (form) => {
+    const recipient = form.dataset.emailTo;
+    const subject = form.dataset.formKind === "enquiry"
+        ? `Website enquiry: ${form.querySelector("[name='enquiryType']").selectedOptions[0].text}`
+        : `Website message: ${form.querySelector("[name='messageType']").selectedOptions[0].text}`;
+    const messageLines = Array.from(new FormData(form), ([label, value]) => {
+        const fieldLabel = label.replace(/([A-Z])/g, " $1").replace(/^./, (letter) => letter.toUpperCase());
+        return `${fieldLabel}: ${value}`;
+    });
+    const emailUrl = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(messageLines.join("\n\n"))}`;
+    const status = form.querySelector("[data-email-status]");
+    const fallbackLink = form.querySelector("[data-email-fallback]");
+
+    form.setAttribute("action", emailUrl);
+    fallbackLink.href = emailUrl;
+    fallbackLink.hidden = false;
+    status.textContent = "Your email app should open with a draft. Review it and press Send there; if it did not open, use the link below.";
+    window.location.href = emailUrl;
+};
+
+emailDraftForms.forEach((form) => {
+    const phoneField = form.querySelector('input[type="tel"]');
+    const enquiryType = form.querySelector("[data-enquiry-type]");
+    const response = form.querySelector("[data-enquiry-response]");
+
+    if (phoneField) {
+        phoneField.addEventListener("input", () => validatePhoneField(phoneField));
+        phoneField.addEventListener("blur", () => validatePhoneField(phoneField));
+    }
+
+    if (enquiryType && response) {
+        const today = new Date();
+        const localToday = [
+            today.getFullYear(),
+            String(today.getMonth() + 1).padStart(2, "0"),
+            String(today.getDate()).padStart(2, "0")
+        ].join("-");
+        const volunteerDate = form.querySelector("#volunteer-date");
+        volunteerDate.min = localToday;
+
+        const enquiryResponses = {
+            program: "We can share details about the program you choose. The site does not list a fixed cost or live capacity, so the team will confirm current arrangements.",
+            volunteer: "Volunteer roles and start dates depend on current needs. The team can confirm which opportunities are available.",
+            sponsor: "Sponsorship options and amounts depend on the proposed support and current priorities. The team can discuss suitable options with you.",
+            general: "Tell us what you would like to know and the team can point you in the right direction."
+        };
+
+        // Show only the questions for the chosen topic and require its relevant selection.
+        const updateEnquiryFields = () => {
+            const selectedTopic = enquiryType.value;
+            form.querySelectorAll("[data-topic-fields]").forEach((group) => {
+                const isRelevant = group.dataset.topicFields === selectedTopic;
+                group.hidden = !isRelevant;
+                group.querySelectorAll("input, select").forEach((field) => {
+                    field.disabled = !isRelevant;
+                    field.required = isRelevant && field.tagName === "SELECT";
+                });
+            });
+
+            response.textContent = enquiryResponses[selectedTopic]
+                || "Choose a topic to see what the team can help you with.";
+        };
+
+        enquiryType.addEventListener("change", updateEnquiryFields);
+        updateEnquiryFields();
+    }
+
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        if (phoneField && !validatePhoneField(phoneField)) {
+            phoneField.reportValidity();
+            return;
+        }
+
+        if (!form.reportValidity()) {
+            return;
+        }
+
+        prepareEmailDraft(form);
+    });
+});

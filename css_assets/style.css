@@ -962,6 +962,10 @@ a:hover {
         margin-bottom: 18px;
     }
 
+    .form-group[hidden] {
+        display: none;
+    }
+
     .form-group label {
         display: block;
         margin-bottom: 6px;
@@ -979,6 +983,13 @@ a:hover {
         background-color: #fbfdfb;
     }
 
+    .form-group small {
+        display: block;
+        margin-top: 6px;
+        color: #526257;
+        line-height: 1.4;
+    }
+
     /* Message box height. */
     .form-group textarea {
         min-height: 150px;
@@ -986,9 +997,54 @@ a:hover {
     }
 
     /* Focus effect when someone clicks on a text box, email box or dropdown*/
-    .form-group input:focus, .form-group select:focus, .form-group textarea {
-        outline: 3px solid rgba(35, 132, 75, 0.2)   ;
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+        outline: 3px solid rgba(35, 132, 75, 0.2);
         border-color: #23844b;
+    }
+
+    .form-response {
+        padding: 14px 16px;
+        border-left: 4px solid #23844b;
+        margin-bottom: 18px;
+        background: #e8f3eb;
+        color: #243126;
+    }
+
+    .form-status {
+        min-height: 1.5em;
+        margin: 14px 0 0;
+        color: #145a32;
+        font-weight: 700;
+    }
+
+    .form-note {
+        margin: 16px 0 0;
+        color: #526257;
+        font-size: 0.92rem;
+    }
+
+    .email-fallback-link {
+        display: inline-block;
+        margin-top: 10px;
+        font-weight: 700;
+    }
+
+    .email-fallback-link[hidden] {
+        display: none;
+    }
+
+    .contact-form-section,
+    .enquiry-form-section {
+        margin-top: 48px;
+    }
+
+    .contact-form-section .section-heading,
+    .enquiry-form-section .section-heading {
+        margin-bottom: 24px;
+    }
+
+    .enquiry-form-section .form-card {
+        max-width: 850px;
     }
 
     /*--------------------------------
