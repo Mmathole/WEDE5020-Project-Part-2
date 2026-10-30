@@ -958,6 +958,14 @@ a:hover {
         padding: 32px;
     }
 
+    .form-honeypot {
+        position: absolute;
+        left: -10000px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+    }
+
     .form-group {
         margin-bottom: 18px;
     }
@@ -981,6 +989,13 @@ a:hover {
         border-radius: 7px;
         font: inherit;
         background-color: #fbfdfb;
+    }
+
+    .form-group input[aria-invalid="true"],
+    .form-group select[aria-invalid="true"],
+    .form-group textarea[aria-invalid="true"] {
+        border-color: #9c2525;
+        outline-color: #9c2525;
     }
 
     .form-group small {
@@ -1015,6 +1030,19 @@ a:hover {
         margin: 14px 0 0;
         color: #145a32;
         font-weight: 700;
+    }
+
+    .form-status--error {
+        color: #9c2525;
+    }
+
+    .form-status--success {
+        color: #145a32;
+    }
+
+    .ajax-contact-form button:disabled {
+        cursor: wait;
+        opacity: 0.7;
     }
 
     .form-note {

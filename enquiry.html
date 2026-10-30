@@ -40,14 +40,13 @@
                 <p>Ask about school feeding programs, volunteering or sponsorship. Choose a topic and we’ll show you what information to include.</p>
             </div>
 
+            <!-- This section explains current support options and links to key pages. -->
             <div class="two-column">
                 <div>
                     <p>
                         Program costs and volunteer or sponsorship availability depend on current needs. The team can provide the latest details after reviewing your enquiry.
                     </p>
-                    <p>
-                        This website prepares an email draft for you. Your email app must be set up to send it; the site does not send or store form submissions.
-                    </p>
+                    <p>Your enquiry is sent to the team so they can reply with current information. Please don’t include sensitive personal information.</p>
 
                     <div class="contact-grid enquiry-contact">
                         <div class="contact-item">
@@ -78,8 +77,15 @@
                     <h2 id="enquiry-form-heading">Tell Us What You’re Interested In</h2>
                     <p>Choose a topic to see relevant questions. Costs and availability are confirmed by the team because they depend on current needs.</p>
                 </div>
+                <!-- The form collects only the details needed to reply to this enquiry. -->
                 <div class="form-card">
-                    <form class="email-draft-form" action="mailto:info@thelunchboxfund.co.za" method="get" data-email-to="info@thelunchboxfund.co.za" data-form-kind="enquiry">
+                    <form class="ajax-contact-form" action="/api/contact" method="post" data-ajax-form>
+                        <!-- This hidden field helps the server spot automated spam submissions. -->
+                        <div class="form-honeypot" aria-hidden="true">
+                            <label for="enquiry-website">Leave this field empty</label>
+                            <input id="enquiry-website" name="website" type="text" tabindex="-1" autocomplete="off">
+                        </div>
+                        <input type="hidden" name="formType" value="enquiry">
                         <div class="form-group">
                             <label for="enquiry-type">What would you like to ask about?</label>
                             <select id="enquiry-type" name="enquiryType" required data-enquiry-type>
@@ -152,11 +158,10 @@
                         </div>
 
                         <p class="form-response" data-enquiry-response role="status" aria-live="polite">Choose a topic to see what the team can help you with.</p>
-                        <button type="submit" class="btn">Prepare Enquiry Email</button>
+                        <button type="submit" class="btn">Send Enquiry</button>
                         <p class="form-status" data-email-status role="status" aria-live="polite"></p>
-                        <a class="email-fallback-link" data-email-fallback hidden>Open the prepared email</a>
                     </form>
-                    <p class="form-note">Selecting the button opens a draft in your email app. Review it and press Send there to contact the organization.</p>
+                    <p class="form-note">Your enquiry is sent to the organization for a reply. Please don’t include sensitive personal information.</p>
                 </div>
             </section>
         </div>

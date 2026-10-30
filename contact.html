@@ -40,6 +40,7 @@
                 <p>Ask us about school feeding programs, child nutrition, volunteering and partnerships.</p>
             </div>
 
+            <!-- Visitors can use these details if they prefer not to use the form. -->
             <section class="contact-grid">
                 <div class="contact-item">
                     <h2>Email</h2>
@@ -61,14 +62,20 @@
                 </div>
             </section>
 
-            <!-- This form gathers a general message and prepares it for the organization's email. -->
+            <!-- This form sends a validated message to the site's contact endpoint. -->
             <section class="contact-form-section" aria-labelledby="contact-form-heading">
                 <div class="section-heading">
                     <h2 id="contact-form-heading">Send a General Message</h2>
-                    <p>Share your contact details and message. Your email app will open with a draft for you to review and send.</p>
+                    <p>Share your contact details and message. We’ll send it securely to the organization.</p>
                 </div>
                 <div class="form-card">
-                    <form class="email-draft-form" action="mailto:info@thelunchboxfund.co.za" method="get" data-email-to="info@thelunchboxfund.co.za" data-form-kind="contact">
+                    <form class="ajax-contact-form" action="/api/contact" method="post" data-ajax-form>
+                        <!-- This hidden field helps the server spot automated spam submissions. -->
+                        <div class="form-honeypot" aria-hidden="true">
+                            <label for="contact-website">Leave this field empty</label>
+                            <input id="contact-website" name="website" type="text" tabindex="-1" autocomplete="off">
+                        </div>
+                        <input type="hidden" name="formType" value="contact">
                         <div class="form-group">
                             <label for="contact-name">Your name</label>
                             <input id="contact-name" name="name" type="text" autocomplete="name" minlength="2" maxlength="80" required>
@@ -104,11 +111,10 @@
                             <small id="contact-message-help">Please write between 10 and 2,000 characters.</small>
                         </div>
 
-                        <button type="submit" class="btn">Prepare Message Email</button>
+                        <button type="submit" class="btn">Send Message</button>
                         <p class="form-status" data-email-status role="status" aria-live="polite"></p>
-                        <a class="email-fallback-link" data-email-fallback hidden>Open the prepared email</a>
                     </form>
-                    <p class="form-note">The website does not send or store your message. Your email app must be set up to send it.</p>
+                    <p class="form-note">Your message is sent to the organization for a reply. Please don’t include sensitive personal information.</p>
                 </div>
             </section>
 

@@ -267,13 +267,13 @@ if (programsGrid && programControls && programResults) {
     sortSelect.addEventListener("change", renderPrograms);
 }
 
-const emailDraftForms = document.querySelectorAll(".email-draft-form");
+const ajaxForms = document.querySelectorAll("[data-ajax-form]");
 
 // Check phone numbers by counting digits, while allowing familiar punctuation.
 const validatePhoneField = (phoneField) => {
     const digits = phoneField.value.replace(/\D/g, "");
     const isOptionalAndEmpty = !phoneField.required && phoneField.value.trim() === "";
-    const usesAllowedCharacters = /^[+0-9().\s-]+$/.test(phoneField.value);
+    const usesAllowedCharacters = /^[+0-9(). -]+$/.test(phoneField.value);
     const isValid = isOptionalAndEmpty
         || (usesAllowedCharacters && digits.length >= 7 && digits.length <= 15);
 
@@ -282,36 +282,36 @@ const validatePhoneField = (phoneField) => {
     return isValid;
 };
 
-// Prepare a mailto URL so the visitor can review and send the message in their email app.
-const prepareEmailDraft = (form) => {
-    const recipient = form.dataset.emailTo;
-    const subject = form.dataset.formKind === "enquiry"
-        ? `Website enquiry: ${form.querySelector("[name='enquiryType']").selectedOptions[0].text}`
-        : `Website message: ${form.querySelector("[name='messageType']").selectedOptions[0].text}`;
-    const messageLines = Array.from(new FormData(form), ([label, value]) => {
-        const fieldLabel = label.replace(/([A-Z])/g, " $1").replace(/^./, (letter) => letter.toUpperCase());
-        return `${fieldLabel}: ${value}`;
-    });
-    const emailUrl = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(messageLines.join("\n\n"))}`;
-    const status = form.querySelector("[data-email-status]");
-    const fallbackLink = form.querySelector("[data-email-fallback]");
-
-    form.setAttribute("action", emailUrl);
-    fallbackLink.href = emailUrl;
-    fallbackLink.hidden = false;
-    status.textContent = "Your email app should open with a draft. Review it and press Send there; if it did not open, use the link below.";
-    window.location.href = emailUrl;
-};
-
-emailDraftForms.forEach((form) => {
+ajaxForms.forEach((form) => {
     const phoneField = form.querySelector('input[type="tel"]');
     const enquiryType = form.querySelector("[data-enquiry-type]");
     const response = form.querySelector("[data-enquiry-response]");
+    const status = form.querySelector("[data-email-status]");
+    const submitButton = form.querySelector('button[type="submit"]');
 
     if (phoneField) {
         phoneField.addEventListener("input", () => validatePhoneField(phoneField));
         phoneField.addEventListener("blur", () => validatePhoneField(phoneField));
     }
+
+    form.querySelectorAll("input, select, textarea").forEach((field) => {
+        field.addEventListener("input", () => {
+            if (field.matches(":valid")) {
+                field.removeAttribute("aria-invalid");
+            }
+        });
+        field.addEventListener("change", () => {
+            if (field.matches(":valid")) {
+                field.removeAttribute("aria-invalid");
+            }
+        });
+    });
+
+    form.addEventListener("invalid", (event) => {
+        event.target.setAttribute("aria-invalid", "true");
+        status.className = "form-status form-status--error";
+        status.textContent = event.target.validationMessage || "Please correct this field before sending.";
+    }, true);
 
     if (enquiryType && response) {
         const today = new Date();
@@ -350,18 +350,60 @@ emailDraftForms.forEach((form) => {
         updateEnquiryFields();
     }
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         if (phoneField && !validatePhoneField(phoneField)) {
+            status.className = "form-status form-status--error";
+            status.textContent = "Please enter a valid phone number before sending.";
             phoneField.reportValidity();
             return;
         }
 
         if (!form.reportValidity()) {
+            const firstInvalidField = form.querySelector(":invalid");
+            firstInvalidField?.setAttribute("aria-invalid", "true");
+            firstInvalidField?.focus();
             return;
         }
 
-        prepareEmailDraft(form);
+        const originalButtonText = submitButton.textContent;
+        const formData = Object.fromEntries(new FormData(form).entries());
+        submitButton.disabled = true;
+        submitButton.textContent = "Sending...";
+        status.className = "form-status";
+        status.textContent = "Sending your message securely...";
+
+        try {
+            // Send form data in the background so the visitor stays on this page.
+            const result = await fetch(form.action, {
+                method: form.method.toUpperCase(),
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData)
+            });
+            const reply = await result.json().catch(() => ({}));
+
+            if (!result.ok) {
+                throw new Error(reply.message || "We could not send your message. Please try again later.");
+            }
+
+            status.className = "form-status form-status--success";
+            status.textContent = reply.message || "Your message has been sent. The team will reply using the email address you provided.";
+            form.reset();
+            form.querySelectorAll("[aria-invalid]").forEach((field) => field.removeAttribute("aria-invalid"));
+            phoneField?.setCustomValidity("");
+
+            if (enquiryType) {
+                enquiryType.dispatchEvent(new Event("change"));
+            }
+        } catch (error) {
+            status.className = "form-status form-status--error";
+            status.textContent = error instanceof TypeError
+                ? "We could not reach the message service. Please check your connection and try again."
+                : error.message;
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = originalButtonText;
+        }
     });
 });

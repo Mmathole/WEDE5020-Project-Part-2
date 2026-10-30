@@ -68,6 +68,41 @@ Budget
 - complete navigation menu
 - add content in donate.html
 
+## Contact and enquiry form service
+
+The contact and enquiry forms submit in the background to the Node.js endpoint at
+`/api/contact`. The server validates the fields again and sends the message using
+Nodemailer. These forms do not send email directly from the visitor's browser.
+
+### Local setup
+
+1. Install Node.js 20 or newer.
+2. From the project folder, run `npm install`.
+3. Configure the mail settings in the terminal before starting the server. In
+   PowerShell, use your mail provider's values:
+
+   ```powershell
+   $env:SMTP_HOST = "smtp.example.org"
+   $env:SMTP_PORT = "587"
+   $env:SMTP_USER = "your-smtp-user"
+   $env:SMTP_PASS = "your-smtp-password"
+   $env:MAIL_FROM = "website@example.org"
+   $env:SITE_ORIGIN = "http://localhost:3000"
+   npm start
+   ```
+
+   `SMTP_SECURE` is optional; use `"true"` if your provider requires implicit
+   TLS. `MAIL_TO` optionally overrides the recipient address. Keep real
+   credentials out of source control.
+4. Open `http://localhost:3000`. Visit `/health` to check that the server is
+   responding.
+
+Production hosting must run this Node.js server (or an equivalent serverless
+endpoint) and set `SITE_ORIGIN` to the exact public site origin. A static-only
+host cannot process the forms. Configure SMTP credentials through the hosting
+provider's secret/environment-variable settings; successful delivery also
+depends on the SMTP provider allowing the configured sender.
+
   ## Screenshot evidence
   ### Desktop
   <img width="1887" height="942" alt="image" src="https://github.com/user-attachments/assets/f09fe075-a2ff-4c2a-a1da-daf1fd1f0d88" />
