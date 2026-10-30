@@ -231,7 +231,7 @@ if (programsGrid && programControls && programResults) {
         // Build cards with DOM text nodes so program text is never treated as HTML.
         const cards = matchingPrograms.map((program) => {
             const card = document.createElement("article");
-            const title = document.createElement("h3");
+            const title = document.createElement("h2");
             const description = document.createElement("p");
             const category = document.createElement("p");
 

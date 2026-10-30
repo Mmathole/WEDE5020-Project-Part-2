@@ -86,11 +86,6 @@ a:hover {
         min-height: 90px;
     }
 
-    .header-top h1 {
-        font-size: clamp(2rem, 5vw, 3.2rem);
-        margin-bottom: 5px;
-    }
-
     .header-copy {
         flex: 0 1 auto;
         text-align: center;
@@ -98,10 +93,12 @@ a:hover {
         margin-left: 8px;
     }
 
-    .header-copy h1 {
+    .header-copy .header-title {
+        margin: 0 0 6px;
+        color: inherit;
         font-size: clamp(1.4rem, 3vw, 2.4rem);
         line-height: 1.1;
-        margin-bottom: 6px;
+        font-weight: 700;
     }
 
     .header-copy p {
@@ -160,7 +157,7 @@ a:hover {
     -------------------------*/
     .hero {
         background: linear-gradient(rgba(13, 70, 39, 0.78), rgba(20, 90, 50, 0.78)),
-                    url('../images/hero%20image%202.png') center/cover no-repeat;
+                    url('../images/lunchbox-fund-school-meals-hero.png') center/cover no-repeat;
         color: #f4f8f3;
         text-align: center;
         min-height: 430px;
@@ -174,6 +171,7 @@ a:hover {
         max-width: 760px;
     }
 
+    .hero h1,
     .hero h2 {
         font-size: clamp(2rem, 5vw, 3.4rem);
         margin-bottom: 18px;
@@ -354,6 +352,12 @@ a:hover {
         color: #526257;
     }
 
+    .program-category {
+        color: #526257;
+        font-size: 0.9rem;
+        text-transform: capitalize;
+    }
+
     .program-grid .card {
         animation: about-panel-enter 0.25s ease both;
     }
@@ -392,6 +396,7 @@ a:hover {
         margin-bottom: 28px;
     }
 
+    .about-page .section-heading h1,
     .about-page .section-heading h2 {
         line-height: 1.2;
     }
@@ -859,6 +864,7 @@ a:hover {
         }
     }
 
+    .card h2,
     .card h3 {
         color: #145a32;
         margin-bottom: 10px;
@@ -1094,7 +1100,7 @@ a:hover {
             text-align: center;
         }
 
-        .header-copy h1 {
+        .header-copy .header-title {
             font-size: 1.6rem;
         }
 

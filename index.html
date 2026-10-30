@@ -7,25 +7,23 @@
   <!--Makes the website responsive to different screen sizes and devices. -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!--name that appears on the browser tab. -->
-  <title>The Lunchbox Fund | Home</title>
+  <!-- This title and summary describe the home page in search results. -->
+  <title>The Lunchbox Fund | Nutritious School Meals</title>
+  <meta name="description" content="The Lunchbox Fund helps vulnerable schoolchildren in South Africa access nutritious meals so they can attend school, focus on learning and thrive.">
 
-  <!-- Connects the HTML file to an external CSS file for styling. -->
+  <!-- This file contains the shared colors, layout, and mobile styles. -->
   <link rel="stylesheet" href="./css_assets/style.css">
 
 </head>
 
 <body>
-    <!------------------------------------------------------------
-    HEADER
-    ------------------------------------------------------------>
-
+    <!-- The header introduces the organization and links to every main page. -->
     <header class="site-header">
 
         <div class="header-top">
-              <img src="./images/newLogogreenicon.png" alt="The Lunchbox Fund logo" class="logo-image">
+              <img src="./images/lunchbox-fund-logo.png" alt="The Lunchbox Fund logo" class="logo-image">
               <div class="header-copy">
-                  <h1>The Lunchbox Fund</h1>
+                  <p class="header-title">The Lunchbox Fund</p>
                   <p>Transforming a child's education, one meal at a time</p>
               </div>
         </div> 
@@ -37,7 +35,7 @@
         ---------------------------------------->
         <nav class="navbar" aria-label="Main navigation">
             <ul>
-                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html" class="active" aria-current="page">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="programs.html">Programs</a></li>
                 <li><a href="donate.html">Donate</a></li>
@@ -47,41 +45,24 @@
         </nav>
     </header>
 
-    <!---------------------------------------------
-    MAIN CONTENT
-    ------------------------------------------------------------>
+    <!-- The main area explains the charity's work and ways to get involved. -->
     <main>
-        <!------------------------
-        Hero Section
-        ------------------------>
+        <!-- The main heading tells visitors what the organization does. -->
         <section class="hero">
             <div class="hero-content">
-            <h2>Providing Meals to Children in Need</h2>
+            <h1>Nutritious School Meals for Children in Need</h1>
             <p>Join us in our mission to ensure that no child goes hungry.</p>
-           <!---- <a href="donate.html" class="btn">Donate Now</a> -->
-
-       <!-- represents a paragraph-->
          <p>
-                <!-- To introduce The Lunchbox Fund to visitors. -->
-
-                    The Lunchbox Fund provides nutritious meals to 
-                    vulnerable schoolchildren and supports their 
-                    education and improve their future opportunities.
-
-                </p>
+                    The Lunchbox Fund supports vulnerable schoolchildren with nutritious meals, helping them attend school, focus on learning and build brighter futures.
+          </p>
             <div class="more-info">
-                <!--Donate Button-->
                 <a href="donate.html" class="btn">Donate Now</a>
-
-                <!-- About button -->
-                 <a href="about.html" class="btn">Learn More</a>
+                <a href="about.html" class="btn">Learn About Our Mission</a>
                  </div>
                  </div> 
             </section>       
     
-        <!-----------------------------
-        Introduction Section
-        ----------------------------->
+        <!-- These cards point to more details about meals, learning, and support. -->
         <section class="section">
             <div class="container">
                 <h2>Making a Difference</h2>
@@ -94,7 +75,7 @@
                 </p>
             </div>
 
-            <!-- Three cards-->
+            <!-- Each card links visitors to a useful page on this website. -->
             <div class="card-grid">
                 <!-- Card 1 -->
                 <article class="card">
@@ -125,9 +106,7 @@
             </div>
         </section>
 
-        <!---------------------------------
-        Donate Section
-        --------------------------------->
+        <!-- This final invitation links directly to the donation information. -->
         <section class="cta">
             <div class="container">
                 <h2>Help Us Make Every Meal Count</h2>
@@ -138,13 +117,11 @@
 
             </div>
         </section>
-        </main> 
+    </main>
 
-        <!-- Footer -->
+        <!-- The footer marks the end of the page. -->
         <footer class="site-footer">
               <p>&copy; 2026 The Lunchbox Fund.</p>
         </footer>
-    </main>
 </body>
 </html>
-
